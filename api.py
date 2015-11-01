@@ -11,7 +11,7 @@ from tornado.options import define, options
 
 define("port", default = 8888, help="run port", type=int)
 define("mysql_host", default = "127.0.0.1:3306")
-define("mysql_database", default="mchat")
+define("mysql_database", default="wechat")
 define("mysql_user", default="root")
 define("mysql_password", default="123456")
 
