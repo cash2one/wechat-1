@@ -53,7 +53,7 @@ def main():
                         else:
                             # get article list
                             if result.get('GET').find('/mp/getmasssendmsg?') >= 0:
-                            print 'http://' + result.get('Host') + result.get('GET')
+                                print 'http://' + result.get('Host') + result.get('GET')
 
                             # article page
                             article_re = re.compile(r'^/s\?__biz')
