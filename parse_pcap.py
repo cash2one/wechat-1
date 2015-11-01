@@ -15,10 +15,15 @@ def handle_get(headerString):
 
     for line in headerLines:
         if 0 != len(line):
-            key, value = line.split(' ', 1)
-            key = key.strip().replace(':', '')
-            value = value.strip().replace(' HTTP/1.1', '')
-            result[key] = value
+            try:
+                key, value = line.split(' ', 1)
+                key = key.strip().replace(':', '')
+                value = value.strip().replace(' HTTP/1.1', '')
+                result[key] = value
+                pass
+            except Exception, e:
+                print line
+                raise
     return result
 
 def handle_post(headerString):
