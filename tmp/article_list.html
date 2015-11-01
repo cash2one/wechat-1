@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+	<meta charset="utf-8">
+	<script type="text/javascript">
+        document.domain = "qq.com";
+        window._tegSpeed = [];
+        var _wxao = window._wxao || {};
+        _wxao.begin = (+new Date());
+    </script>
+	<meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  	<title>View Messages</title>
+	<link rel="stylesheet" type="text/css" href="http://res.wx.qq.com/mmbizwap/en_US/htmledition/style/msg_historical2318b9.css" media="all">   
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="referrer" content="origin-when-cross-origin">
+<link rel="dns-prefetch" href="//res.wx.qq.com">
+<link rel="dns-prefetch" href="//mmbiz.qpic.cn">
+<link rel="shortcut icon" type="image/x-icon" href="http://res.wx.qq.com/mmbizwap/en_US/htmledition/images/icon/common/favicon22c41c.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<script type="text/javascript">
+    String.prototype.html = function(encode) {
+        var replace =["&#39;", "'", "&quot;", '"', "&nbsp;", " ", "&gt;", ">", "&lt;", "<", "&amp;", "&", "&yen;", "¥"];
+        if (encode) {
+            replace.reverse();
+        }
+        for (var i=0,str=this;i< replace.length;i+= 2) {
+             str=str.replace(new RegExp(replace[i],'g'),replace[i+1]);
+        }
+        return str;
+    };
+
+    window.isInWeixinApp = function() {
+        return /MicroMessenger/.test(navigator.userAgent);
+    };
+
+    window.getQueryFromURL = function(url) {
+        url = url || 'http://qq.com/s?a=b#rd'; // 做一层保护，保证URL是合法的
+        var query = url.split('?')[1].split('#')[0].split('&'),
+            params = {};
+        for (var i=0; i<query.length; i++) {
+            var arg = query[i].split('=');
+            params[arg[0]] = arg[1];
+        }
+        if (params['pass_ticket']) {
+        	params['pass_ticket'] = encodeURIComponent(params['pass_ticket'].html(false).html(false).replace(/\s/g,"+"));
+        }
+        return params;
+    };
+
+    (function() {
+	    var params = getQueryFromURL(location.href);
+        window.uin = params['uin'] || '';
+        window.key = params['key'] || '';
+        window.pass_ticket = params['pass_ticket'] || '';
+    })();
+
+    window.logs = {
+    	pagetime: {}
+    };
+</script>
+
+        <title></title>
+        
+    </head>
+    <body id="" class="en_US " ontouchstart="">
+        		  
+<div class="msg_page" id="msg_page">    
+
+</div>
+<div class="more_wrapper">
+	<a href="javascript:;" class="more_link">Follow Official Account for more messages</a>
+</div>
+<div class="loading_wrapper loading" style="display:none;">
+	<span class="loadingIcon"></span>Loading...</div>
+<div class="more_wrapper no_more" style="display:none">
+	<a href="javascript:;" class="more_link">No more message</a>
+</div>
+
+        
+        <script>window.moon_map = {"new_video/ctl.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/new_video/ctl2933be.js","biz_wap/utils/device.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_wap/utils/device27f470.js","biz_wap/jsapi/core.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_wap/jsapi/core275627.js","pages/version4video.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/pages/version4video2933be.js","biz_common/utils/url/parse.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/utils/url/parse275627.js","biz_common/template-2.0.1-cmd.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/template-2.0.1-cmd275627.js","pages/report.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/pages/report2933be.js","biz_wap/utils/ajax.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_wap/utils/ajax275627.js","biz_common/dom/class.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/dom/class275627.js","biz_common/dom/event.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/dom/event275627.js","history/webp.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/webp2843e5.js","history/localstorage.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/localstorage260530.js","biz_common/utils/string/html.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/utils/string/html275627.js","biz_common/utils/string/emoji.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_common/utils/string/emoji275627.js","history/template_helper.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/template_helper24f29e.js","history/report.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/report24f29e.js","history/addEvent.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/addEvent2843e5.js","appmsg/outer_link.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/appmsg/outer_link275627.js","history/lazy.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/lazy260a55.js","history/location.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/location24f29e.js","history/render.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/render25624c.js","history/index.js":"http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/history/index284861.js"};window.moon_crossorigin = true;</script><script type="text/javascript" src="http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/biz_wap/moon275627.js" crossorigin></script> 
+
+<script type="text/html" id="list">
+	{{each list as value keys}} 
+{{if value && value.comm_msg_info}}
+	{{if value.comm_msg_info.type==1}}
+	<div class="msg_list">
+		<div class="msg_list_hd">
+			<h3 class="msg_list_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</h3>
+		</div>
+		<div class="msg_list_bd">
+			<div class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+				<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+				<div class="text_box msg_inner_wrapper primary_box">
+					<div class="msg_item text">
+						<p class="msg_text" data-flag="false">{{=value.comm_msg_info.content}}</p>
+					</div>
+					<span class="box_arrow"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{else if value.comm_msg_info.type==3}}
+	<div class="msg_list">
+		<div class="msg_list_hd">
+			<h3 class="msg_list_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</h3>
+		</div>
+		<div class="msg_list_bd">
+			<div id="WXVOICE{{value.comm_msg_info.id}}" class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+					<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+					<a href="javascript:;" class="msg_inner_wrapper primary_box">
+					<div class="msg_item img" data-msgid="{{value.comm_msg_info.id}}" data-type="imgp">
+						<span class="msg_img">
+							<img data-src="/mp/getmediadata?__biz={{biz}}&type=img&mode=small&msgid={{value.comm_msg_info.id}}&uin={{uin}}&key={{key}}" alt="" data-msgid="{{value.comm_msg_info.id}}" data-s="640"  data-t="{{value.comm_msg_info.datetime*1000}}">
+						</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	{{else if value.comm_msg_info.type==34}}
+	<div class="msg_list">
+		<div class="msg_list_hd">
+			<h3 class="msg_list_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</h3>
+		</div>
+		<div class="msg_list_bd">
+			<div id="WXVOICE{{value.comm_msg_info.id}}" class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+					<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+					<a href="javascript:void(0);"  class="voice_box msg_inner_wrapper primary_box">
+					<div class="msg_item voice" length="{{value.voice_msg_ext_info.play_length}}" data-flag="false">
+						<span class="voice_point">
+							<i class="add_on_icon voice"></i>
+							<audio fileid="{{value.voice_msg_ext_info.fileid}}" preload type="audio/mpeg" src="/mp/getmediadata?__biz={{biz}}&type=voice&msgid={{value.comm_msg_info.id}}&uin={{uin}}&key={{key}}"  alt="">not support</audio>
+						</span>
+						<span class="msg_desc"></span>
+					</div>
+					<span class="box_arrow"></span>
+				</a>
+			</div>
+		</div>
+	</div>	
+	{{else if value.comm_msg_info.type==49}}
+	<div class="msg_list">
+		<div class="msg_list_hd">
+			<h3 class="msg_list_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</h3>
+		</div>
+		<div class="msg_list_bd">
+			{{if value.app_msg_ext_info.is_multi==0}} 		
+			<div id="WXAPPMSG{{value.comm_msg_info.id}}" class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+				<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+  				<div class="msg_inner_wrapper default_box news_box">
+	    			<a class="msg_item news redirect" hrefs="{{value.app_msg_ext_info.content_url}}">
+	     				<div class="msg_item_hd">
+							<h4 class="msg_title">{{value.app_msg_ext_info.title}}</h4>
+						</div>
+						<div class="msg_item_bd">
+							<div class="msg_cover" hrefs="{{value.app_msg_ext_info.content_url}}">
+								<img data-src="{{value.app_msg_ext_info.cover}}" alt="" data-s="640" data-t="{{value.comm_msg_info.datetime*1000}}" hrefs="{{value.app_msg_ext_info.content_url}}">
+							</div>
+							<p class="msg_desc" hrefs="{{value.app_msg_ext_info.content_url}}">
+								{{=value.app_msg_ext_info.digest}}
+							</p>
+						</div>
+						<div class="msg_item_ft" hrefs="{{value.app_msg_ext_info.content_url}}">
+							Read more<span class="add_on_icon arrow"></span>
+						</div>
+					</a>
+				</div>
+			</div>
+			{{else}}
+			<div id="WXAPPMSG{{value.comm_msg_info.id}}" class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+					<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+					<div class="msg_inner_wrapper default_box news_box">
+					<div class="msg_item multi_news">
+						<a class="msg_cover redirect" hrefs="{{value.app_msg_ext_info.content_url}}">
+							<img data-src="{{value.app_msg_ext_info.cover}}" alt="" data-s="640" data-t="{{value.comm_msg_info.datetime*1000}}" hrefs="{{value.app_msg_ext_info.content_url}}">
+							<div class="msg_title_bar">
+								<h4 class="msg_title" hrefs="{{value.app_msg_ext_info.content_url}}">{{value.app_msg_ext_info.title}}</h4>
+							</div>
+						</a>
+						{{each value.app_msg_ext_info.multi_app_msg_item_list as subvalue subkey}}
+							<div class="sub_msg_list">
+								<a class="sub_msg_item redirect" hrefs="{{subvalue.content_url}}">
+									<span class="thumb">
+										<img data-src="{{subvalue.cover}}" alt="" style="width:50px;height:50px;" data-s="300" data-t="{{value.comm_msg_info.datetime*1000}}">
+									</span>
+									<h4 class="msg_title" hrefs="{{subvalue.content_url}}">{{subvalue.title}}</h4>
+								</a>
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+	{{else if value.comm_msg_info.type==62}}
+	<div class="msg_list">
+		<div class="msg_list_hd">
+			<h3 class="msg_list_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</h3>
+		</div>
+		<div class="msg_list_bd">
+			<div id="WXVIDEO{{value.comm_msg_info.id}}" class="msg_wrapper" msgid="{{value.comm_msg_info.id}}">
+				<p class="msg_date">{{dateFormat value.comm_msg_info.datetime*1000 'yyyy年M月d日hh:mm'}}</p>
+				<iframe class="video_iframe" style="" height="" width="" frameborder="0" data-src="https://mp.weixin.qq.com/mp/getcdnvideourl?__biz={{biz}}&cdn_videoid={{value.video_msg_ext_info.cdn_videoid}}&thumb={{value.video_msg_ext_info.thumb}}&uin={{uin}}&key={{key}}" allowfullscreen=""></iframe>
+			</div>
+		</div>
+	</div>
+	{{/if}}
+{{/if}}
+	{{/each}}
+</script>
+
+<script type="text/javascript">
+	window.onerror = function(msg, url, line, col, error){
+		if(location.href.indexOf('sharedebug')>-1){
+			alert(msg);
+		}
+		//没有URL不上报！上报也不知道错误
+	    if (msg != "Script error." && !url){
+	        return true;
+	    }
+		function getUA(){
+            return navigator.userAgent;
+        }
+        function getOS(ua){
+            var oss = [/android/gi, /iPhone/gi,/Windows/gi];
+            var i, o;
+            var ua = ua || getUA();
+            for (i = 0; i < oss.length; i++) {
+                o = ua.match(oss[i]);
+                if (o) {
+                    return o[0];
+                }
+            }
+            return 'unknown';
+        }
+        function getBrowser(ua){
+            //ie5、ie6、ie7、ie8、ie9、ie10、qq、chrome、firefox、safari、se360、theworld、maxthon、other
+            var browsers = [/mqqbrowser/gi,/Chrome/gi,/safari/gi,/MSIE/gi];
+            var b, i;
+            var ua = ua || getUA();
+            for (i = 0; i < browsers.length; i++) {
+                b = ua.match(browsers[i]);
+                if (b) {
+                    return b[0];
+                }
+            }
+            return 'unknown';
+        }
+        function getMetered(){
+            //微信浏览器把nettype放入了useragent
+            var ua = getUA();
+            var netType = [/WIFI/gi,/3G/gi,/2G/gi];
+            for (var i = 0; i < netType.length; i++) {
+                var b = ua.match(netType[i]);
+                if (b) {
+                    return b[0];
+                }
+            };
+            return 'other';
+        }
+        function parseUrl(url) {
+            var a =  document.createElement('a');
+            a.href = url;
+            return {
+                source: url,
+                protocol: a.protocol.replace(':',''),
+                host: a.hostname,
+                port: a.port,
+                query: a.search,
+                params: (function(){
+                    var ret = {},
+                        seg = a.search.replace(/^\?/,'').split('&'),
+                        len = seg.length, i = 0, s;
+                    for (;i<len;i++) {
+                        if (!seg[i]) { continue; }
+                        s = seg[i].split('=');
+                        ret[s[0]] = s[1];
+                    }
+                    return ret;
+                })(),
+                file: (a.pathname.match(/([^\/?#]+)$/i) || [,''])[1],
+                hash: a.hash.replace('#',''),
+                path: a.pathname.replace(/^([^\/])/,'/$1'),
+                relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+                segments: a.pathname.replace(/^\//,'').split('/')
+            };
+        }
+        function obj2query(obj) {
+            var arr = [];
+            for(var key in obj) {
+                arr.push(key + "=" + encodeURIComponent(obj[key]||""));
+            }
+            return arr.join("&");
+        }
+        function getUrl(){
+            var href = location.href,
+                parseUrls = parseUrl(href),
+                params = parseUrls.params;
+            //href中包涵了uin、key、devicetype、version、lang这几个登录态多余信息
+            delete params.uin;
+            delete params.key;
+            delete params.devicetype;
+            delete params.version;
+            delete params.lang;
+            delete params.from;
+            delete params.isappinstalled;
+            delete params.pass_ticket;
+            var reurl = parseUrls.protocol + '://' + parseUrls.host + parseUrls.path + '?' + obj2query(params);
+            return reurl;
+        }
+        //不一定所有浏览器都支持col参数
+        var col = col || (window.event && window.event.errorCharacter) || 0;
+        var data = {
+        	from :'wap',
+        	path: "/mp/getmasssendmsg", //发生错误的页面
+			file: getUrl(), //发生错误的文件(定位到js)
+			line: line, //行号
+			col: col, //出错位置
+			msg: msg, //出错信息
+			uin: 'NTE1MzA0MDAw',
+			ua: getBrowser(),
+			os: getOS(),
+			net:getMetered()		
+        };
+        
+        if (!!error && !!error.stack){
+            //如果浏览器有堆栈信息
+            //直接使用
+            data.msg = error.message;
+        }else if (!!arguments.callee){
+            //尝试通过callee拿堆栈信息
+            var ext = [];
+            var f = arguments.callee.caller, c = 3;
+            //这里只拿三层堆栈信息
+            while (f && (--c>0)) {
+               ext.push(f.toString());
+               if (f  === f.caller) {
+                    break;//如果有环
+               }
+               f = f.caller;
+            }
+            ext = ext.join(" ");//wowo那边不能有；，：
+            data.msg = ext;
+        }
+        var tmp = 'path:'+data.path+';file:'+data.file+';line:'+data.line+';msg:'+data.msg+';uin:'+data.uin+';col:'+data.col+';from:wap;';
+        
+        var reportUrl = 'https://mp.weixin.qq.com/mp/speedreport?data_type=4&net='+data.net+'&os='+data.os+'&ua='+data.ua+'&ext_data='+encodeURIComponent(tmp);
+        //console.log(reportUrl);
+        setTimeout(function(){
+        	var _img = new Image(1, 1);
+        	_img.src = reportUrl;
+        },16);
+	}
+
+	var minMsgId = 0xffffffff,
+		loading = document.querySelector('.loading'), 
+		images = [],
+		isLoading = false,
+        windowwx_css = "http://res.wx.qq.com/mmbizwap/en_US/htmledition/style/page/winwx/history284861.css",
+		iswp = !!(navigator.userAgent.match(/Windows\sPhone/i)),
+		isContinue = '1',
+    	biz = 'MzIwNzA1MTg0OQ==',
+    	key = 'b410d3164f5f798ecc1e08f741078c00ab4e4516470f6a1da8753745218c472434c7d3c15e3fb7d65b600302f5ab0c6e',
+    	uin = 'NTE1MzA0MDAw',
+    	isFriend = '0',
+    	clipHeight = 300,
+    	    	msgList = '{&quot;list&quot;:[{&quot;comm_msg_info&quot;:{&quot;id&quot;:400241526,&quot;type&quot;:49,&quot;datetime&quot;:1445870498,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年10月26日大盘分析&quot;,&quot;digest&quot;:&quot;1）目前大盘处于下跌趋势中，主趋势不变；观望为主；2）近期趋势大盘处于反弹箱体震荡中（今天K先图中两根绿色先处，为箱体上下两边），不属于大仓位操作区间；小仓位可以玩玩；3）近期推荐股票进入收获期；如雪莱特、中工国际、恒瑞医药、康力电梯等等&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400241345,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400241523&amp;amp;idx=1&amp;amp;sn=839a0693809f801d07fddb979409c427&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxQQWWgIWXz7AETUOY1ya3lDc0XXPOCAuRPb9JDbA0neOmesRTXJEFoxFibPgiaYbQXyTRF3LDKaib2PQ\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400201301,&quot;type&quot;:49,&quot;datetime&quot;:1445615185,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;15年10月23日大盘和000609策略分析&quot;,&quot;digest&quot;:&quot;（1）总体上大盘处于下跌趋势中，原则上观望为宜；但是短期内，处于反弹阶段，可以20%左右仓位玩玩；一定要结合大盘节奏，踏好节奏点，控制好风险和仓位，掌握卖出主动权；（2）公司推荐股票持续关注！！！&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400201241,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400201298&amp;amp;idx=1&amp;amp;sn=5265bb68e90de5a9381926bdd1a9e2d8&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxRpxTSMFF43dZ26HZH7RYND1V4LkLWF854XUdYibHBd7J9WKStcfjxwyt4Q79pwEGlicjHRBhruQ50g\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400178147,&quot;type&quot;:49,&quot;datetime&quot;:1445527238,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年10月22日大盘分析和000609策略&quot;,&quot;digest&quot;:&quot;（1）具体未来策略操作观看视频。（总体上大盘处于下降趋势中，目前是反弹阶段）；（2）公司推票：看后文！！！&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400053814,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400178144&amp;amp;idx=1&amp;amp;sn=6c77b7ac39246158fc4d38a4244959e5&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxRZ4hbRUo8gUWqAs5gEe3fro0UQsLWfVOyibx6K0v2p87OzZvhSQgk3cRyVYiahjbpOhmlxG90Ovgyw\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400053918,&quot;type&quot;:49,&quot;datetime&quot;:1445439636,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年大盘和000609分析&quot;,&quot;digest&quot;:&quot;（1）上周一我们介入市场的20%仓位，到现在应该注意控制风险和仓位了，今天破绿色斜线收不回来，选择控制风险和减低仓位，具体未来策略操作观看视频。（总体上大盘处于下降趋势中，目前是反弹阶段）；（2）公司推票：看后文！！！&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400053814,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400053915&amp;amp;idx=1&amp;amp;sn=68a0d5c8bb5c22c6dd9c0c8451c7d1a5&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxQYICxI112GD3iaqHQ6N6nPQ8iaCRkfMDuR2XE14tQkvnXbnASLQDibSR9CloKicSjaIn6EFYTQYE5eTA\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400038167,&quot;type&quot;:49,&quot;datetime&quot;:1445354974,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;15年10月20号晚上大盘分析和000609策略分析&quot;,&quot;digest&quot;:&quot;（1）上周一我们介入市场的20%仓位，到现在应该注意控制风险和仓位了，目前大盘和你股票沿着淡红色斜线上走，可以选择拿一拿，一旦走平或者跌破斜线，应该控制好风险。（总体上大盘处于下降趋势中，目前是反弹阶段）；（2）公司推票：看后文！！！&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400037868,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400038164&amp;amp;idx=1&amp;amp;sn=38b94186544e17674c55524158b4d425&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxS7Uoo1GRCNQXh8Rtv8aILymN5pUuPBx9hdtNia9F3rqKP3VuHaHsw4EibpsQZtIuaa7E5wrmWxv9mA\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400027485,&quot;type&quot;:49,&quot;datetime&quot;:1445267740,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年10月19日晚大盘分析和000609策略分析&quot;,&quot;digest&quot;:&quot;周一我们进场，沿着绿色斜线上走，就拿住，走平或者跌破，应该管理或者控制风险了。&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400010735,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400027482&amp;amp;idx=1&amp;amp;sn=237a1cb665929c55236a23813e9ef405&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxTwYFulLEMU099KNxW8RiaJiaHQleTdUQHQZrvqbjGsprr1BVyrwTazpZO0Roff54HmMR15bof88gbQ\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:400010747,&quot;type&quot;:49,&quot;datetime&quot;:1445099967,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年10月16日（周五）晚上大盘分析和炒股核心——思想&quot;,&quot;digest&quot;:&quot;周五稍微上升，后市可以期待或者调整，技术上大盘下跌主趋势不改。但是短期还是有机会，周一进场后，沿着绿色线上走，可以选择拿一拿，走平或者跌破注意控制仓位和风险；&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:400010733,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=400010744&amp;amp;idx=1&amp;amp;sn=3713a058d2f4dac1aee8732ba6d01866&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxSc64hib7RJGe8ibY8U7njxicFibZB6th9WWHAib2Zd0ibCskXicUT7uwViaVsMFapjBcHZtWj7MqOhN6QKkw\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:207799444,&quot;type&quot;:49,&quot;datetime&quot;:1444925045,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;15年10月15日大盘分析和000609策略&quot;,&quot;digest&quot;:&quot;总体上可以看见，大盘下跌主趋势不改，建议着眼大趋势观望为宜原则。短期内，周四大盘微微上突，貌似上攻，貌似有短暂机会，根据明天情况，适当采取小仓位进场或者减仓行为。沿着绿色线上走，可以选择拿一拿，走平或者跌破注意控制仓位和风险；&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:207799399,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=207799441&amp;amp;idx=1&amp;amp;sn=f65df893e7b7c2ab6bb4c4a6818bb897&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxTHBy7eyTzkGEYyJ4fWIVTxTd6REZKJhzEibE5wib4wDQqBfLLcI7zDz9XNneZYdVKn4YywDskTPeqQ\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:207790135,&quot;type&quot;:49,&quot;datetime&quot;:1444838749,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2014年10月14日大盘分析和000609策略&quot;,&quot;digest&quot;:&quot;周二、三大盘温和窄幅震荡，短期突破次级盘整形态上边，注意裂口及前面形态下边等层层阻滞。短期宽松政策并不能改变主趋势。技术上大盘下跌主趋势不改。建议着眼大趋势观望为宜。但是短线机会存在，把握难度大，小仓位操作可能性存在！\\\\n看如下视频！&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:207781750,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=207790132&amp;amp;idx=1&amp;amp;sn=f23f2c589959f24d76f9dd7f91366071&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxSP0YJbvZLjXSPGf3UGd1fMwGf2hU2Lm61ktIwFDCicayfDSZYXBBkWaicP7blnbm9Vd50TOO1tlZQA\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}},{&quot;comm_msg_info&quot;:{&quot;id&quot;:207781797,&quot;type&quot;:49,&quot;datetime&quot;:1444752472,&quot;fakeid&quot;:&quot;3207051849&quot;,&quot;status&quot;:2,&quot;content&quot;:&quot;&quot;},&quot;app_msg_ext_info&quot;:{&quot;title&quot;:&quot;2015年10月13日晚上大盘分析和000609策略分析&quot;,&quot;digest&quot;:&quot;总体上，大盘处于下跌趋势中；但是现阶段处于反弹中，昨天大盘上攻放量，可以20%仓位介入，今天可以持有；沿着绿色斜线上走，可以持有，一旦走平或者跌破斜线，注意控制风险和仓位！更多理解看如下视频；要看完整版（大盘个股分析、选股方法）到土豆网站&quot;,&quot;content&quot;:&quot;&quot;,&quot;fileid&quot;:207781750,&quot;content_url&quot;:&quot;http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIwNzA1MTg0OQ==&amp;amp;mid=207781794&amp;amp;idx=1&amp;amp;sn=432f11bbd3baa32e44adda578852905b&amp;amp;scene=4#wechat_redirect&quot;,&quot;source_url&quot;:&quot;&quot;,&quot;cover&quot;:&quot;http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/6xfPmxgINxQIHvqEDjInzswQP3G6bvJYQicE5OCFibLvNPBvTJfZmSgm7HmNv5t1ichYlUydzT0P44FUqNYic3RdjA\\/0?wx_fmt=jpeg&quot;,&quot;subtype&quot;:0,&quot;is_multi&quot;:0,&quot;multi_app_msg_item_list&quot;:[],&quot;author&quot;:&quot;吴彪&quot;}}]}';
+    	    	seajs.use("history/index.js");
+</script>
+
+    </body>
+</html>
+
