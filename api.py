@@ -16,8 +16,8 @@ define("mysql_database", default="wechat")
 define("mysql_user", default="root")
 define("mysql_password", default="123456")
 
-# TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "templates")
-# STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
+TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "templates")
+STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 REDIS_CACHE = TaskCache(db = 1)
 
 class Application(tornado.web.Application):
