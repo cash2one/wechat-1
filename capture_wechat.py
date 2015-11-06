@@ -52,7 +52,7 @@ while True:
     official_account_id = params.get('__biz') or []
     uin = params.get('uin') or []
 
-    if path.find('/mp/getmasssendmsg?') >= 0:
+    if path.find('/mp/getmasssendmsg') >= 0:
         wechat_type = 'list'
     elif re.compile(r'^/s\?__biz').match(path) is not None:
         wechat_type = 'article'
