@@ -33,7 +33,8 @@ class TaskCache(object):
 
     @classmethod
     def is_empty(cls):
-        if len(cls.cache) == 0:
+        key_size = cls.cache.dbsize()
+        if key_size == 0:
             return True
         else:
             return False
