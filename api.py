@@ -5,6 +5,7 @@ import tornado.web
 import tornado.options
 import tornado.ioloop
 import tornado.web
+import datetime
 
 from lib.task_cache import TaskCache
 from lib.log import Log
@@ -59,8 +60,8 @@ class Task(tornado.web.RequestHandler):
                 official_account = last_official_account.get('wechat_code')
                 official_account_id = last_official_account.get('id')
                 if official_account_id is not None:
-                    db.execute("UPDATE official_account SET last_update_time = now() WHERE id = %d" % official_account_id)
-                    print "Update official_account id = %d" % official_account_id
+                    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    db.execute("UPDATE official_account SET last_update_time = \'%s\' WHERE id = %d" % now, official_account_id)
                 self.write(response_body % official_account)
             else:
                 self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
