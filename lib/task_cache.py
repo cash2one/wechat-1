@@ -8,7 +8,7 @@ class TaskCache(object):
     def __init__(self, host = '127.0.0.1', port = 6379, db = 0):
         self.cache = redis.Redis(host = host, port = port, db = db)
 
-    def get(self):
+    def get_random(self):
         key_size = self.cache.dbsize()
         if key_size > 0:
             key = self.cache.randomkey()
@@ -18,7 +18,7 @@ class TaskCache(object):
         else:
             return None
 
-    def push(self):
+    def push(self, url):
         m1 = md5.new()
         m1.update(url)
         md5_value = m1.hexdigest()
