@@ -48,8 +48,8 @@ while True:
     wechat_type = ''
     date_str = datetime.datetime.now().strftime('%Y%m%d')
 
-    official_account_id = params.get('__biz') || []
-    uin = params.get('uin') || []
+    official_account_id = params.get('__biz') or []
+    uin = params.get('uin') or []
 
     if path.find('/mp/getmasssendmsg?') >= 0:
         wechat_type = 'list'
