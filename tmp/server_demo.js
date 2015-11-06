@@ -26,8 +26,12 @@ service = server.listen(9999,
       );
     }
 
+    var start_time = Date.now();
+    var end_time = null;
     page.open(url, function (status) {
+      end_time = Date.now();
       if ("success" === status) {
+        console.log("Spend time:" + (end_time - start_time) + "ms");
         response.write(page.content);
       } else {
         response.write("error");
