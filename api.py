@@ -16,8 +16,9 @@ define("mysql_database", default="wechat")
 define("mysql_user", default="root")
 define("mysql_password", default="123456")
 
-TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "templates")
-STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
+# TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "templates")
+# STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
+REDIS_CACHE = TaskCache(db = 1)
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -50,7 +51,7 @@ class Task(tornado.web.RequestHandler):
         # http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5ODIyMTE0MA==&appmsgid=10000382#wechat_redirect
         # self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
 
-        if TaskCache.is_empty():
+        if REDIS_CACHE.is_empty():
             db = self.application.db
             last_official_account = db.get("SELECT * FROM official_account ORDER BY last_update_time ASC LIMIT 1")
 
