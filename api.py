@@ -7,6 +7,7 @@ import tornado.ioloop
 import tornado.web
 
 from lib.task_cache import TaskCache
+from lib.log import Log
 from tornado.options import define, options
 
 define("port", default = 8888, help="run port", type=int)
@@ -54,14 +55,16 @@ class Task(tornado.web.RequestHandler):
             last_official_account = db.get("SELECT * FROM official_account ORDER BY last_update_time ASC LIMIT 1")
 
             if last_official_account != None:
-                official_account = last_official_account['wechat_code']
-                id = last_official_account['id']
-                if id is not None:
-                    db.execute("UPDATE official_account SET last_update_time = now() WHERE id = %d" % id)
-                    print "Update official_account id = %d" % id
+                official_account = last_official_account.get('wechat_code')
+                official_account_id = last_official_account.get('id')
+                if official_account_id is not None:
+                    db.execute("UPDATE official_account SET last_update_time = now() WHERE id = %d" % official_account_id)
+                    print "Update official_account id = %d" % official_account_id
                 self.write(response_body % official_account)
             else:
-                self.write("456")
+                self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
+        else:
+            self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
