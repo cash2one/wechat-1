@@ -7,7 +7,7 @@ import re
 from task_cache import TaskCache
 
 pc = pcap.pcap("wlan0")
-pc.setfilter('tcp and src 192.168.7.103')
+pc.setfilter('tcp and src 192.168.7.102')
 # f = open('test.pcap')
 # pc = dpkt.pcap.Reader(f)
 
@@ -58,15 +58,21 @@ def main():
 
                         # get article list
                         if uri.find('/mp/getmasssendmsg?') >= 0:
-                            print 'http://' + result.get('Host') + result.get('GET')
+                            list_url = 'http://' + result.get('Host') + result.get('GET')
+                            print list_url
+                            TaskCache.push(list_url)
                             pass
                         # article page
                         elif re.compile(r'^/s\?__biz').match(uri) is not None:
-                            print 'http://' + result.get('Host') + result.get('GET')
+                            article_url = 'http://' + result.get('Host') + result.get('GET')
+                            print article_url
+                            TaskCache.push(article_url)
                             pass
                         # get pic referer
                         elif result.get('Referer') is not None:
-                            print result['Referer']
+                            referer_url = result['Referer']
+                            print referer_url
+                            TaskCache.push(referer_url)
                             pass
                         else:
                             pass
