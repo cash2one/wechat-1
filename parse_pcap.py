@@ -4,6 +4,8 @@ import dpkt
 import sys
 import re
 
+from task_cache import TaskCache
+
 pc = pcap.pcap("wlan0")
 pc.setfilter('tcp and src 192.168.7.103')
 # f = open('test.pcap')
@@ -52,19 +54,23 @@ def main():
                     method = method.group(0).strip()
                     if 'GET' == method:
                         result = handle_get(headerString)
+                        uri = result.get('GET')
 
-                        if result.get('Referer') is not None:
+                        # get article list
+                        if uri.find('/mp/getmasssendmsg?') >= 0:
+                            print 'http://' + result.get('Host') + result.get('GET')
+                            pass
+                        # article page
+                        elif re.compile(r'^/s\?__biz').match(uri) is not None:
+                            print 'http://' + result.get('Host') + result.get('GET')
+                            pass
+                        # get pic referer
+                        elif result.get('Referer') is not None:
                             print result['Referer']
+                            pass
                         else:
-                            # get article list
-                            if result.get('GET').find('/mp/getmasssendmsg?') >= 0:
-                                print 'http://' + result.get('Host') + result.get('GET')
+                            pass
 
-                            # article page
-                            article_re = re.compile(r'^/s\?__biz')
-                            article_match = article_re.match(result.get('GET'))
-                            if article_match is not None:
-                                print 'http://' + result.get('Host') + result.get('GET')
 
 if __name__ == '__main__':
     main()

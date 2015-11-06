@@ -1,21 +1,35 @@
+#coding:utf-8
+import md5
+import redis
+
 class TaskCache(object):
     """docstring for TaskCache"""
-    cache = []
+    cache = redis.Redis(db = 0)
 
     def __init__(self, arg):
         self.arg = arg
 
     @classmethod
     def get(cls):
-        if len(cls.cache) > 0:
-            return cls.cache.pop()
+        key_size = cls.cache.dbsize()
+        if key_size > 0:
+            key = cls.cache.randomkey()
+            value = cls.cache.get(key)
+            cls.delete(key)
+            return value
         else:
             return None
 
     @classmethod
     def push(cls, url):
-        cls.cache.append(url)
-        pass
+        m1 = md5.new()
+        m1.update(url)
+        md5_value = m1.hexdigest()
+        if cls.exists(md5_value):
+            pass
+        else:
+            cls.cache.set(md5_value, url)
+            pass
 
     @classmethod
     def is_empty(cls):
