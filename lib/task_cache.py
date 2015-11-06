@@ -15,7 +15,7 @@ class TaskCache(object):
         if key_size > 0:
             key = cls.cache.randomkey()
             value = cls.cache.get(key)
-            cls.delete(key)
+            cls.cache.delete(key)
             return value
         else:
             return None
@@ -25,7 +25,7 @@ class TaskCache(object):
         m1 = md5.new()
         m1.update(url)
         md5_value = m1.hexdigest()
-        if cls.exists(md5_value):
+        if cls.cache.exists(md5_value):
             pass
         else:
             cls.cache.set(md5_value, url)
