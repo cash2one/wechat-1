@@ -5,7 +5,7 @@ import redis
 class TaskCache(object):
     """docstring for TaskCache"""
 
-    def __init__(self, host = '127.0.0.1', port = 6309, db = 0):
+    def __init__(self, host = '127.0.0.1', port = 6379, db = 0):
         self.cache = redis.Redis(host = host, port = port, db = db)
 
     def get(self):
