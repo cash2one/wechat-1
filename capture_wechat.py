@@ -15,6 +15,7 @@ import json
 import time
 import urlparse
 import datetime
+import re
 
 from lib.task_cache import TaskCache
 
