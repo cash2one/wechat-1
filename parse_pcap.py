@@ -10,6 +10,7 @@ pc = pcap.pcap("wlan0")
 pc.setfilter('tcp and src 192.168.7.102')
 # f = open('test.pcap')
 # pc = dpkt.pcap.Reader(f)
+REDIS_CACHE = TaskCache(db = 0)
 
 def handle_get(headerString):
     result = {}
@@ -60,19 +61,19 @@ def main():
                         if uri.find('/mp/getmasssendmsg?') >= 0:
                             list_url = 'http://' + result.get('Host') + result.get('GET')
                             print list_url
-                            TaskCache.push(list_url)
+                            REDIS_CACHE.push(list_url)
                             pass
                         # article page
                         elif re.compile(r'^/s\?__biz').match(uri) is not None:
                             article_url = 'http://' + result.get('Host') + result.get('GET')
                             print article_url
-                            TaskCache.push(article_url)
+                            REDIS_CACHE.push(article_url)
                             pass
                         # get pic referer
                         elif result.get('Referer') is not None:
                             referer_url = result['Referer']
                             print referer_url
-                            TaskCache.push(referer_url)
+                            REDIS_CACHE.push(referer_url)
                             pass
                         else:
                             pass
