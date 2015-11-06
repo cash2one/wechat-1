@@ -32,10 +32,10 @@ def post(url, data):
     return response.read()
 
 
-data = dict(url="http://www.linuxeden.com")
+# data = dict(url="http://www.linuxeden.com")
 
-html = post(PHANTOMJS, data)
-print html
+# html = post(PHANTOMJS, data)
+# print html
 
 while True:
     url = REDIS_FROM.get_random()
