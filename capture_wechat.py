@@ -17,6 +17,8 @@ import time
 import urlparse
 import datetime
 import re
+import pdb
+from selenium import webdriver
 
 from lib.task_cache import TaskCache
 
@@ -24,6 +26,7 @@ REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
 PHANTOMJS = 'http://192.168.7.111:9999'
 DOWNLOAD_PATH = '/home/john/wechat/download'
+DRIVER = webdriver.PhantomJS("/home/john/opt/phantomjs/bin/phantomjs")
 
 def post(url, data):
     req = urllib2.Request(url)
@@ -32,6 +35,12 @@ def post(url, data):
     response = opener.open(req, data)
     return response.read()
 
+def phantomjs(url):
+    pdb.set_trace()
+    driver = webdriver.PhantomJS("/home/john/opt/phantomjs/bin/phantomjs")
+    driver.get(url)
+    print driver.current_url
+    driver.quit()
 
 # data = dict(url="http://www.linuxeden.com")
 
@@ -42,7 +51,7 @@ while True:
     url = REDIS_FROM.get_random()
     if url == None:
         time.sleep(0.1)
-        pass
+        continue
 
     url_parse_object = urlparse.urlparse(url)
     path = url_parse_object.path
@@ -61,8 +70,10 @@ while True:
         wechat_type = None
 
     if 'list' == wechat_type:
-        data = dict(url = url)
-        html = post(PHANTOMJS, data)
+        # vardump data = dict(url = url)
+        # html = post(PHANTOMJS, data)
+        html = ""
+        phantomjs(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/" + official_account_id[0] + "_" + uin[0] + ".html"
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
