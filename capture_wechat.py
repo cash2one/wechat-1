@@ -38,7 +38,7 @@ def post(url, data):
 def phantomjs(url):
     DRIVER.get(url)
     html = DRIVER.page_source
-    return 
+    return html
 
 # data = dict(url="http://www.linuxeden.com")
 
