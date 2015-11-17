@@ -28,6 +28,7 @@ service = server.listen(9999,
 
     var start_time = Date.now();
     var end_time = null;
+    page.clearMemoryCache();
     page.open(url, function (status) {
       end_time = Date.now();
       if ("success" === status) {
