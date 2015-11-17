@@ -68,7 +68,7 @@ while True:
         wechat_type = None
 
     if 'list' == wechat_type:
-        vardump data = dict(url = url)
+        data = dict(url = url)
         html = post(PHANTOMJS, data)
         # html = phantomjs(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/" + official_account_id[0] + "_" + uin[0] + ".html"
