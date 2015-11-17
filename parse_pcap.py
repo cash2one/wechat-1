@@ -62,21 +62,21 @@ def main():
                             list_url = 'http://' + result.get('Host') + result.get('GET')
                             print list_url
                             REDIS_CACHE.push(list_url)
-                            pass
+                            continue
                         # article page
                         elif re.compile(r'^/s\?__biz').match(uri) is not None:
                             article_url = 'http://' + result.get('Host') + result.get('GET')
                             print article_url
                             REDIS_CACHE.push(article_url)
-                            pass
+                            continue
                         # get pic referer
                         elif result.get('Referer') is not None:
                             referer_url = result['Referer']
                             print referer_url
                             REDIS_CACHE.push(referer_url)
-                            pass
+                            continue
                         else:
-                            pass
+                            continue
 
 
 if __name__ == '__main__':
