@@ -61,7 +61,7 @@ class Task(tornado.web.RequestHandler):
                 official_account_id = last_official_account.get('id')
                 if official_account_id is not None:
                     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    db.execute("UPDATE official_account SET last_update_time = \'%s\' WHERE id = %d" % now, official_account_id)
+                    db.execute("UPDATE official_account SET last_update_time = \'%s\' WHERE id = %d" % (now, official_account_id))
                 self.write(response_body % official_account)
             else:
                 self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
