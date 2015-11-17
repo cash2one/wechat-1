@@ -1,5 +1,6 @@
 server = require('webserver').create();
 webpage = require('webpage');
+webpage.clearHttpCache();
 
 service = server.listen(9999,
   function (request, response) {
@@ -7,6 +8,7 @@ service = server.listen(9999,
 
     // create and set page
     var page = webpage.create();
+    page.clearHttpCacheForAllWebPages();
     page.viewportSize = {
       width: 1280,
       height: 720
@@ -21,6 +23,7 @@ service = server.listen(9999,
     page.onLoadFinished = function(status) {
       page.evaluateJavaScript(
         function() {
+          localStorage.clear();
           window.scrollTo(0,100);
         }
       );
