@@ -13,9 +13,9 @@ print html
 # 文章页面 URL
 # http://mp.weixin.qq.com/s?
 # __biz=MzIwNzA1MTg0OQ== //公共账号 ID
-# &mid=400241523 //每次都一样
+# &mid=400241523 //应该是一次推送的所有 post 都一样
 # &idx=1 //每次都一样
-# &sn=839a0693809f801d07fddb979409c427 //每次都一样
+# &sn=839a0693809f801d07fddb979409c427 //article id
 # &scene=4 //每次都一样
 # &uin=NTE1MzA0MDAw //每次都一样
 # &key=04dce534b3b035ef8cad60ddd8e8a9233218b8863370af2424bc2c5f473a95bd6fc862f020b7c986c2e20225ddb9c19e // 前 16 个字符每次一样
