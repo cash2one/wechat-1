@@ -1,6 +1,5 @@
 server = require('webserver').create();
 webpage = require('webpage');
-webpage.clearHttpCache();
 
 service = server.listen(9999,
   function (request, response) {
