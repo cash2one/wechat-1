@@ -36,11 +36,7 @@ def post(url, data):
     return response.read()
 
 def phantomjs(url):
-    pdb.set_trace()
-    driver = webdriver.PhantomJS("/home/john/opt/phantomjs/bin/phantomjs")
-    driver.get(url)
-    print driver.current_url
-    driver.quit()
+    return DRIVER.get(url).page_source
 
 # data = dict(url="http://www.linuxeden.com")
 
@@ -72,8 +68,7 @@ while True:
     if 'list' == wechat_type:
         # vardump data = dict(url = url)
         # html = post(PHANTOMJS, data)
-        html = ""
-        phantomjs(url)
+        html = phantomjs(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/" + official_account_id[0] + "_" + uin[0] + ".html"
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
