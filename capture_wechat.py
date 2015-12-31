@@ -70,13 +70,25 @@ while True:
     if 'list' == wechat_type:
         data = dict(url = url)
         html = post(PHANTOMJS, data)
-        # html = phantomjs(url)
-        filename = DOWNLOAD_PATH + "/" + date_str + "/" + official_account_id[0] + "_" + uin[0] + ".html"
+        filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
         with open(filename, "w") as f:
             f.write(html)
             f.close()
+    elif 'article' == wechat_type:
+        data = dict(url = url)
+        html = post(PHANTOMJS, data)
+        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + ".html"
+
+        if not os.path.exists(os.path.dirname(filename)):
+            os.makedirs(os.path.dirname(filename))
+        with open(filename, "w") as f:
+            f.write(html)
+            f.close()
+    else:
+        print "Unkown wechat type"
 
 
 
