@@ -41,12 +41,12 @@ def handle_post(header_string):
 
 def cache(url_string):
     if USE_CACHE:
-        REDIS_CACHE.push(list_url)
+        REDIS_CACHE.push(url_string)
     pass
 
 def log(info):
     if DEBUG:
-        print list_url
+        print info
     pass
 
 def main():
