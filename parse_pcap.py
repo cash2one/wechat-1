@@ -11,6 +11,8 @@ pc.setfilter('tcp and src 192.168.7.102')
 # f = open('test.pcap')
 # pc = dpkt.pcap.Reader(f)
 REDIS_CACHE = TaskCache(db = 0)
+USE_CACHE = True
+DEBUG = True
 
 def handle_get(headerString):
     result = {}
@@ -29,13 +31,23 @@ def handle_get(headerString):
                 raise
     return result
 
-def handle_post(headerString):
+def handle_post(header_string):
     result = {}
-    headerLines = headerString.split('\r\n')
+    headerLines = header_string.split('\r\n')
 
     for line in headerLines:
         if 0 != len(line):
             key, value  = line.split(' ', 1)
+
+def cache(url_string):
+    if USE_CACHE:
+        REDIS_CACHE.push(list_url)
+    pass
+
+def log(info):
+    if DEBUG:
+        print list_url
+    pass
 
 def main():
     for ptime,pdata in pc:
@@ -60,20 +72,22 @@ def main():
                         # get article list
                         if uri.find('/mp/getmasssendmsg?') >= 0:
                             list_url = 'http://' + result.get('Host') + result.get('GET')
-                            print list_url
-                            REDIS_CACHE.push(list_url)
+                            log(list_url)
+                            cache(list_url)
                             continue
+
                         # article page
                         elif re.compile(r'^/s\?__biz').match(uri) is not None:
                             article_url = 'http://' + result.get('Host') + result.get('GET')
-                            print article_url
-                            REDIS_CACHE.push(article_url)
+                            log(article_url)
+                            cache(article_url)
                             continue
+
                         # get pic referer
                         elif result.get('Referer') is not None:
                             referer_url = result['Referer']
-                            print referer_url
-                            REDIS_CACHE.push(referer_url)
+                            log(referer_url)
+                            cache(referer_url)
                             continue
                         else:
                             continue
