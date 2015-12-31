@@ -14,9 +14,9 @@ REDIS_CACHE = TaskCache(db = 0)
 USE_CACHE = True
 DEBUG = True
 
-def handle_get(headerString):
+def handle_get(header_string):
     result = {}
-    headerLines = headerString.split('\r\n')
+    headerLines = header_string.split('\r\n')
 
     for line in headerLines:
         if 0 != len(line):
