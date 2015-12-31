@@ -48,7 +48,8 @@ def phantomjs(url):
 while True:
     url = REDIS_FROM.get_random()
     if url == None:
-        time.sleep(0.1)
+        print "Not url task."
+        time.sleep(1)
         continue
 
     url_parse_object = urlparse.urlparse(url)
@@ -68,6 +69,7 @@ while True:
         wechat_type = None
 
     if 'list' == wechat_type:
+        print "download list page"
         data = dict(url = url)
         html = post(PHANTOMJS, data)
         filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
@@ -93,6 +95,7 @@ while True:
 
 
     time.sleep(0.5)
+    print "==="
     pass
 
 
