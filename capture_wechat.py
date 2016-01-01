@@ -17,33 +17,19 @@ import time
 import urlparse
 import datetime
 import re
-import pdb
-from selenium import webdriver
 
+from selenium import webdriver
+from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
+
+DISPLAY = Display(visible=0, size=(720, 1280))
+DISPLAY.start()
+DRIVER = webdriver.Chrome()
 
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
-PHANTOMJS = 'http://192.168.7.111:9999'
+
 DOWNLOAD_PATH = '/home/john/wechat/download'
-DRIVER = webdriver.PhantomJS("/home/john/opt/phantomjs/bin/phantomjs")
-
-def post(url, data):
-    req = urllib2.Request(url)
-    data = urllib.urlencode(data)
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
-    response = opener.open(req, data)
-    return response.read()
-
-def phantomjs(url):
-    DRIVER.get(url)
-    html = DRIVER.page_source
-    return html
-
-# data = dict(url="http://www.linuxeden.com")
-
-# html = post(PHANTOMJS, data)
-# print html
 
 while True:
     url = REDIS_FROM.get_random()
@@ -70,8 +56,8 @@ while True:
 
     if 'list' == wechat_type:
         print "download list page"
-        data = dict(url = url)
-        html = post(PHANTOMJS, data)
+        DRIVER.get(url)
+        html = (DRIVER.page_source).encode("utf-8")
         filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
 
         if not os.path.exists(os.path.dirname(filename)):
@@ -79,9 +65,10 @@ while True:
         with open(filename, "w") as f:
             f.write(html)
             f.close()
+
     elif 'article' == wechat_type:
-        data = dict(url = url)
-        html = post(PHANTOMJS, data)
+        DRIVER.get(url)
+        html = (DRIVER.page_source).encode("utf-8")
         filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + ".html"
 
         if not os.path.exists(os.path.dirname(filename)):
@@ -92,11 +79,11 @@ while True:
     else:
         print "Unkown wechat type"
 
-
-
     time.sleep(0.5)
     print "==="
     pass
+
+DRIVER.close()
 
 
 
