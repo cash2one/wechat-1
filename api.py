@@ -1,3 +1,4 @@
+#coding:utf-8
 import os.path
 import torndb
 import tornado.httpserver
@@ -66,6 +67,7 @@ class Task(tornado.web.RequestHandler):
             else:
                 self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
         else:
+            # TODO
             self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
 
 if __name__ == "__main__":
