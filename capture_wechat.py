@@ -27,8 +27,7 @@ DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
 DISPLAY.start()
 DRIVER = webdriver.Chrome()
-DRIVER.set_timeout(3)
-DRIVER.set_page_load_timeout(3)
+DRIVER.set_page_load_timeout(5)
 
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
@@ -41,11 +40,11 @@ def log(msg):
     pass
 
 def get(url):
-    before = time.time()
+    before = time.time() * 1000
     DRIVER.get(url)
-    after = time.time()
+    after = time.time() * 1000
     take_time = after - before
-    log("Spider takes time: %d secode." % take_time)
+    log("Spider takes time: %d millisecond." % take_time)
     html = (DRIVER.page_source).encode("utf-8")
     return html
 
