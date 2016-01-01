@@ -14,7 +14,7 @@ pc.setfilter('tcp and src 192.168.7.102')
 REDIS_CACHE = TaskCache(db = 0)
 USE_CACHE = False
 DEBUG = True
-LOG = Log()
+LOG = Log("ParsePcap")
 
 def handle_get(header_string):
     result = {}
