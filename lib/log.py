@@ -15,5 +15,8 @@ class Log(object):
         self.logger = logging.getLogger(self.class_name)
         self.logger.addHandler(handler)
 
-    def info(sefl, message):
-        sefl.logger.info(message)
+    def info(self, message):
+        self.logger.info(message)
+
+    def error(self, message):
+        self.logger.error(message)
