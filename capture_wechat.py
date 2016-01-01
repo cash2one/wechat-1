@@ -72,7 +72,7 @@ while True:
         wechat_type = None
 
     if 'list' == wechat_type:
-        print "download list page"
+        log("download list page")
         html = get(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
 
@@ -83,8 +83,8 @@ while True:
             f.close()
 
     elif 'article' == wechat_type:
-        DRIVER.get(url)
-        html = (DRIVER.page_source).encode("utf-8")
+        log("download article page")
+        html = get(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + ".html"
 
         if not os.path.exists(os.path.dirname(filename)):
@@ -93,11 +93,10 @@ while True:
             f.write(html)
             f.close()
     else:
-        print "Unkown wechat type"
+        log("Unkown wechat type")
 
-    time.sleep(0.5)
-    print "==="
-    pass
+    time.sleep(1)
+    continue
 
 DRIVER.close()
 
