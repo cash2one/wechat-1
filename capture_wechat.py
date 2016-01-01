@@ -40,13 +40,16 @@ def log(msg):
     pass
 
 def get(url):
-    before = time.time() * 1000
-    DRIVER.get(url)
-    after = time.time() * 1000
-    take_time = after - before
-    log("Spider takes time: %d millisecond." % take_time)
-    html = (DRIVER.page_source).encode("utf-8")
-    return html
+    try:
+        before = time.time() * 1000
+        DRIVER.get(url)
+        after = time.time() * 1000
+        take_time = after - before
+        log("Spider takes time: %d millisecond." % take_time)
+        html = (DRIVER.page_source).encode("utf-8")
+        return html
+    except Exception:
+        print "Timeout"
 
 while True:
     url = REDIS_FROM.get_random()
