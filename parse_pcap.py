@@ -5,14 +5,16 @@ import sys
 import re
 
 from lib.task_cache import TaskCache
+from lib.log import Log
 
 pc = pcap.pcap("wlan0")
 pc.setfilter('tcp and src 192.168.7.102')
 # f = open('test.pcap')
 # pc = dpkt.pcap.Reader(f)
 REDIS_CACHE = TaskCache(db = 0)
-USE_CACHE = True
+USE_CACHE = False
 DEBUG = True
+LOG = Log()
 
 def handle_get(header_string):
     result = {}
@@ -46,7 +48,8 @@ def cache(url_string):
 
 def log(info):
     if DEBUG:
-        print info
+        #print info
+        LOG.info(info)
     pass
 
 def main():
