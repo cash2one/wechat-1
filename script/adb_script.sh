@@ -8,8 +8,8 @@
 
 
 while true;do
-	adb shell input touchscreen tap 357 853
-	sleep 2
-	adb shell input touchscreen tap 49 96
-	sleep 1
+    adb shell input touchscreen tap 357 853
+    sleep 2
+    adb shell input touchscreen tap 49 96
+    sleep 1
 done
