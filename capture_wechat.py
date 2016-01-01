@@ -7,7 +7,7 @@
 # Distributed under terms of the MIT license.
 
 """
-
+Get url from redis 0, capture wechat page, and save it to file
 """
 import os
 import urllib
@@ -16,20 +16,38 @@ import json
 import time
 import urlparse
 import datetime
+import time
 import re
 
 from selenium import webdriver
 from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
 
+DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
 DISPLAY.start()
 DRIVER = webdriver.Chrome()
+DRIVER.set_timeout(3)
+DRIVER.set_page_load_timeout(3)
 
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
 
 DOWNLOAD_PATH = '/home/john/wechat/download'
+
+def log(msg):
+    if DEBUG:
+        print msg
+    pass
+
+def get(url):
+    before = time.time()
+    DRIVER.get(url)
+    after = time.time()
+    take_time = after - before
+    log("Spider takes time: %d secode." % take_time)
+    html = (DRIVER.page_source).encode("utf-8")
+    return html
 
 while True:
     url = REDIS_FROM.get_random()
@@ -56,8 +74,7 @@ while True:
 
     if 'list' == wechat_type:
         print "download list page"
-        DRIVER.get(url)
-        html = (DRIVER.page_source).encode("utf-8")
+        html = get(url)
         filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
 
         if not os.path.exists(os.path.dirname(filename)):
