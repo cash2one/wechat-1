@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2015 john <john@apple.local>
+# Copyright 漏 2015 john <john@apple.local>
 #
 # Distributed under terms of the MIT license.
 
