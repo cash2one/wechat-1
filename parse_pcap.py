@@ -44,7 +44,9 @@ def cache(url_string):
     if USE_CACHE:
         url = UrlEntity(url_string)
         key = url.get_param("__biz")
-        REDIS_CACHE.set(key, url_string)
+        if key != None:
+            REDIS_CACHE.set(key, url_string)
+            pass
     pass
 
 def log(info):
