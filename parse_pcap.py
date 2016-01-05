@@ -28,8 +28,8 @@ def handle_get(header_string):
                 result[key] = value
                 pass
             except Exception, e:
-                print line
-                raise
+                print e
+
     return result
 
 def handle_post(header_string):
