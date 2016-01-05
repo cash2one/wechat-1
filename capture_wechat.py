@@ -104,8 +104,8 @@ while True:
 
             try:
                 with open(filename, "w") as f:
-                f.write(html)
-                f.close()
+                    f.write(html)
+                    f.close()
             except Exception, e:
                 print e
 
