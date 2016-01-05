@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright 漏 2015 john <john@apple.local>
+# Copyright 2015 john <john@apple.local>
 #
 # Distributed under terms of the MIT license.
 
@@ -50,6 +50,31 @@ def get(url):
         return html
     except Exception:
         print "Timeout"
+        return None
+
+def get_url_type(url):
+    if url.find('/mp/getmasssendmsg') >= 0:
+        return 'list'
+    elif re.compile(r'^/s\?__biz').match(url) is not None:
+        return 'article'
+    else:
+        return None
+
+def list_process(url):
+    log("download list page")
+    html = get(url)
+    filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+
+    if not os.path.exists(os.path.dirname(filename)):
+        os.makedirs(os.path.dirname(filename))
+    with open(filename, "w") as f:
+        f.write(html)
+        f.close()
+    pass
+
+def article_process():
+    pass
+
 
 while True:
     url = REDIS_FROM.get_random()
@@ -66,24 +91,23 @@ while True:
 
     official_account_id = params.get('__biz') or []
     uin = params.get('uin') or []
-
-    if path.find('/mp/getmasssendmsg') >= 0:
-        wechat_type = 'list'
-    elif re.compile(r'^/s\?__biz').match(path) is not None:
-        wechat_type = 'article'
-    else:
-        wechat_type = None
+    wechat_type = get_url_type(path)
 
     if 'list' == wechat_type:
         log("download list page")
         html = get(url)
-        filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+        if html != None:
+            filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
 
-        if not os.path.exists(os.path.dirname(filename)):
-            os.makedirs(os.path.dirname(filename))
-        with open(filename, "w") as f:
-            f.write(html)
-            f.close()
+            if not os.path.exists(os.path.dirname(filename)):
+                os.makedirs(os.path.dirname(filename))
+
+            try:
+                with open(filename, "w") as f:
+                f.write(html)
+                f.close()
+            except Exception, e:
+                print e
 
     elif 'article' == wechat_type:
         log("download article page")
