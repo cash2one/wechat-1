@@ -27,7 +27,7 @@ DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
 DISPLAY.start()
 DRIVER = webdriver.Chrome()
-DRIVER.set_page_load_timeout(5)
+DRIVER.set_page_load_timeout(10)
 
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
@@ -48,8 +48,8 @@ def get(url):
         log("Spider takes time: %d millisecond." % take_time)
         html = (DRIVER.page_source).encode("utf-8")
         return html
-    except Exception:
-        print "Timeout"
+    except Exception, e:
+        print e
         return None
 
 def get_url_type(url):
