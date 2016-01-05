@@ -5,6 +5,7 @@ import sys
 import re
 
 from lib.task_cache import TaskCache
+import lib.url_entity
 
 pc = pcap.pcap("wlan0")
 pc.setfilter('tcp and src 192.168.7.102')
@@ -41,7 +42,9 @@ def handle_post(header_string):
 
 def cache(url_string):
     if USE_CACHE:
-        REDIS_CACHE.push(url_string)
+        url = url_entity.UrlEntity(url_string)
+        key = url.get("__biz")
+        REDIS_CACHE.set(key, url_string)
     pass
 
 def log(info):
@@ -72,6 +75,7 @@ def main():
                         # get article list
                         if uri.find('/mp/getmasssendmsg?') >= 0:
                             list_url = 'http://' + result.get('Host') + result.get('GET')
+                            url = url_entity.UrlEntity(list_url)
                             log(list_url)
                             cache(list_url)
                             continue
