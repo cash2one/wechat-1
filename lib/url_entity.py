@@ -17,7 +17,7 @@ class UrlEntity(object):
 
     def get_param(self, key):
         resule = self.params.get(key)
-        if (resule == None):
+        if (resule != None):
             return resule[0]
         else:
             return None
