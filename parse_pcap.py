@@ -5,7 +5,7 @@ import sys
 import re
 
 from lib.task_cache import TaskCache
-import lib.url_entity
+from lib.url_entity import UrlEntity
 
 pc = pcap.pcap("wlan0")
 pc.setfilter('tcp and src 192.168.7.102')
@@ -42,8 +42,8 @@ def handle_post(header_string):
 
 def cache(url_string):
     if USE_CACHE:
-        url = url_entity.UrlEntity(url_string)
-        key = url.get("__biz")
+        url = UrlEntity(url_string)
+        key = url.get_param("__biz")
         REDIS_CACHE.set(key, url_string)
     pass
 

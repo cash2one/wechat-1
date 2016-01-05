@@ -28,6 +28,10 @@ class TaskCache(object):
             self.cache.set(md5_value, url)
             pass
 
+    def set(self, key, value):
+        self.cache.set(key, value)
+        pass
+
     def is_empty(self):
         key_size = self.cache.dbsize()
         if key_size == 0:
