@@ -11,12 +11,13 @@ import datetime
 from lib.task_cache import TaskCache
 from lib.log import Log
 from tornado.options import define, options
+import config
 
-define("port", default = 8888, help="run port", type=int)
-define("mysql_host", default = "127.0.0.1:3306")
-define("mysql_database", default="wechat")
-define("mysql_user", default="root")
-define("mysql_password", default="123456")
+define("port", default = config.SERVER_PORT, help = "run port", type = int)
+define("mysql_host", default = config.MYSQL_HOST)
+define("mysql_database", default = config.MYSQL_DATABASE)
+define("mysql_user", default = config.MYSQL_USER)
+define("mysql_password", default = config.MYSQL_PASSWORD)
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "templates")
 STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
@@ -45,15 +46,8 @@ class Application(tornado.web.Application):
 
 class Task(tornado.web.RequestHandler):
     def get(self):
-        response_body = '<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=%s#wechat_redirect"</script>'
-        # http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_webview_type=1&wechat_redirect
-        # http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect
-        # http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==&uin=NTE1MzA0MDAw&key=b410d3164f5f798e28810fbab3aa65786404571bdf138523122da8508b8eb1f6c95b1aab07a4632aa87818bb9c0ed004&devicetype=android-22&version=26030531&lang=en&nettype=WIFI&pass_ticket=9DETPZPf3uBJKnvyUxvGV4cYtz%2FHEJ%2BASCcLW9kzfxyLekagwBewH3sTp9ZD2ktS
-        # http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5ODIyMTE0MA==&appmsgid=10000382&itemidx=1#wechat_redirect
-        # http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5ODIyMTE0MA==&appmsgid=10000382#wechat_redirect
-        # self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
-
         if REDIS_CACHE.is_empty():
+            response_body = '<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=%s#wechat_redirect"</script>'
             db = self.application.db
             last_official_account = db.get("SELECT * FROM official_account ORDER BY last_update_time ASC LIMIT 1")
 
@@ -65,10 +59,13 @@ class Task(tornado.web.RequestHandler):
                     db.execute("UPDATE official_account SET last_update_time = \'%s\' WHERE id = %d" % (now, official_account_id))
                 self.write(response_body % official_account)
             else:
-                self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
+                self.write('empty')
         else:
-            # TODO
-            self.write('<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIwNzA1MTg0OQ==#wechat_redirect"</script>')
+            article_url = REDIS_CACHE.get_random()
+            if article_url != None:
+                self.write('<script type="text/javascript">location.href="%s"</script>' % article_url)
+            else:
+                self.write('empty')
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
