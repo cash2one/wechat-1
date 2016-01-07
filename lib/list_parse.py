@@ -21,8 +21,10 @@ class ListParse(object):
         # first group
         msg_list = msg_page[0]
         children = msg_list.getchildren()
+        # msg header
         msg_list_hd = children[0]
         first_group_msg_date = msg_list_hd.getchildren()[0].text
+        # msg body
         msg_list_bd = children[1]
 
         # first group message list
@@ -35,12 +37,17 @@ class ListParse(object):
 
     def iterate_msg_list(self, msg_list_html):
         urls = []
+        hrefs = ""
 
         for item in msg_list_html:
             if "{http://www.w3.org/1999/xhtml}a" == item.tag:
-                urls.append(item.get("hrefs"))
+                hrefs = item.get("hrefs")
+                if hrefs is not None:
+                    urls.append(hrefs)
             elif "{http://www.w3.org/1999/xhtml}div" == item.tag:
-                urls.append(item.getchildren()[0].get("hrefs"))
+                hrefs = item.getchildren()[0].get("hrefs")
+                if hrefs is not None:
+                    urls.append(hrefs)
             else:
                 continue
 
@@ -50,7 +57,7 @@ class ListParse(object):
         for item in msg_list:
             self.push_to_redis(item)
 
-# f = open("/Users/john/workspaces/wechat/tmp/MzAwOTY2ODczOA==.html")
-# list_parse = ListParse()
-# print list_parse.get_first_group_urls(f.read())
+f = open("/Users/john/MzA3ODU4NjgwMw==.html")
+list_parse = ListParse()
+print list_parse.get_first_group_urls(f.read())
 
