@@ -57,7 +57,7 @@ class ListParse(object):
         for item in msg_list:
             self.push_to_redis(item)
 
-f = open("/Users/john/MzA3ODU4NjgwMw==.html")
-list_parse = ListParse()
-print list_parse.get_first_group_urls(f.read())
+# f = open("/Users/john/MzA3ODU4NjgwMw==.html")
+# list_parse = ListParse()
+# print list_parse.get_first_group_urls(f.read())
 

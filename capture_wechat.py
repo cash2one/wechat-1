@@ -103,7 +103,7 @@ while True:
                     f.write(html)
                     f.close()
                     msg_list = LIST_PARSE.get_first_group_urls(html)
-                    LIST_PARSE.push_to_redis(msg_list)
+                    LIST_PARSE.push_msg_list_cache(msg_list)
             except Exception, e:
                 print e
 
