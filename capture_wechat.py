@@ -22,6 +22,7 @@ import re
 from selenium import webdriver
 from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
+from lib.list_parse import ListParse
 
 DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
@@ -33,6 +34,8 @@ REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
 
 DOWNLOAD_PATH = '/home/john/wechat/download'
+
+LIST_PARSE = ListParse(REDIS_TO)
 
 def log(msg):
     if DEBUG:
@@ -60,16 +63,7 @@ def get_url_type(url):
     else:
         return None
 
-def list_process(url):
-    log("download list page")
-    html = get(url)
-    filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
-
-    if not os.path.exists(os.path.dirname(filename)):
-        os.makedirs(os.path.dirname(filename))
-    with open(filename, "w") as f:
-        f.write(html)
-        f.close()
+def list_process():
     pass
 
 def article_process():
@@ -90,7 +84,9 @@ while True:
     date_str = datetime.datetime.now().strftime('%Y%m%d')
 
     official_account_id = params.get('__biz') or []
+    article_id = params.get('sn') or []
     uin = params.get('uin') or []
+    # get type from url
     wechat_type = get_url_type(path)
 
     if 'list' == wechat_type:
@@ -106,19 +102,25 @@ while True:
                 with open(filename, "w") as f:
                     f.write(html)
                     f.close()
+                    msg_list = LIST_PARSE.get_first_group_urls(html)
+                    LIST_PARSE.push_to_redis(msg_list)
             except Exception, e:
                 print e
 
     elif 'article' == wechat_type:
         log("download article page")
         html = get(url)
-        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + ".html"
+        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + article_id[0] + ".html"
 
-        if not os.path.exists(os.path.dirname(filename)):
-            os.makedirs(os.path.dirname(filename))
-        with open(filename, "w") as f:
-            f.write(html)
-            f.close()
+        try:
+            if not os.path.exists(os.path.dirname(filename)):
+                os.makedirs(os.path.dirname(filename))
+            with open(filename, "w") as f:
+                f.write(html)
+                f.close()
+        except Exception, e:
+            print e
+
     else:
         log("Unkown wechat type")
 
