@@ -122,7 +122,7 @@ while True:
         if html != None:
             filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
             official_account = OfficialAccount.where(wechat_code = official_account_id[0]).getone()
-            if official_account is not None:
+            if official_account != None:
                 log("update officila account last_article_time to now")
                 official_account.last_article_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 official_account.save()
@@ -138,6 +138,7 @@ while True:
                     msg_list = LIST_PARSE.get_first_group_urls(html)
                     #LIST_PARSE.push_msg_list_cache(msg_list)
                     for msg_url in msg_list:
+                        log("process article page")
                         article_process(msg_url)
                         pass
             except Exception, e:
