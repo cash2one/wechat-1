@@ -23,6 +23,7 @@ from selenium import webdriver
 from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
 from lib.list_parse import ListParse
+from lib.models import OfficialAccount
 
 DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
@@ -114,9 +115,18 @@ while True:
 
     if 'list' == wechat_type:
         log("download list page")
+        # get list html
+        log("Get list url:" + url)
         html = get(url)
+
         if html != None:
             filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+            official_account = OfficialAccount.where(wechat_code = official_account_id[0]).getone()
+            if official_account is not None:
+                log("update officila account last_article_time to now")
+                official_account.last_article_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                official_account.save()
+                pass
 
             if not os.path.exists(os.path.dirname(filename)):
                 os.makedirs(os.path.dirname(filename))
