@@ -66,7 +66,30 @@ def get_url_type(url):
 def list_process():
     pass
 
-def article_process():
+def article_process(url):
+    url_parse_object = urlparse.urlparse(url)
+    path = url_parse_object.path
+    params = urlparse.parse_qs(url_parse_object.query)
+    date_str = datetime.datetime.now().strftime('%Y%m%d')
+
+    official_account_id = params.get('__biz') or []
+    group_id = params.get('mid') or []
+    index = params.get('idx') or []
+    article_id = params.get('sn') or []
+    uin = params.get('uin') or []
+    file_name = official_account_id[0] + '_' + group_id[0] + '_' + index[0] + '_' + article_id[0]
+
+    html = get(url)
+    filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
+
+    try:
+        if not os.path.exists(os.path.dirname(filename)):
+            os.makedirs(os.path.dirname(filename))
+        with open(filename, "w") as f:
+            f.write(html)
+            f.close()
+    except Exception, e:
+        print e
     pass
 
 
@@ -103,7 +126,10 @@ while True:
                     f.write(html)
                     f.close()
                     msg_list = LIST_PARSE.get_first_group_urls(html)
-                    LIST_PARSE.push_msg_list_cache(msg_list)
+                    #LIST_PARSE.push_msg_list_cache(msg_list)
+                    for msg_url in msg_list:
+                        article_process(msg_url)
+                        pass
             except Exception, e:
                 print e
 
