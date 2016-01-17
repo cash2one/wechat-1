@@ -19,6 +19,7 @@ import datetime
 import time
 import re
 
+import config
 from selenium import webdriver
 from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
