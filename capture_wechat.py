@@ -105,7 +105,8 @@ def article_process(url):
 while True:
     url = REDIS_FROM.get_random()
     if url == None:
-        print "Not url task."
+        now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print now + " Not url task."
         time.sleep(1)
         continue
 
