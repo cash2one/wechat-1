@@ -133,7 +133,6 @@ while True:
             official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
 
             if official_account is not None:
-                log("update officila account last_article_time to now")
                 first_group_date = LIST_PARSE.get_first_group_datetime(html)
 
                 reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
