@@ -54,7 +54,7 @@ class Task(tornado.web.RequestHandler):
             last_official_account = OfficialAccount.orderby(OfficialAccount.last_update_time).limit(1).getone()
 
             if last_official_account != None:
-                official_account = last_official_account.wechat
+                official_account = last_official_account.wechat_code
 
                 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 official_account.last_update_time = now
