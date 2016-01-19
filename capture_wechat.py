@@ -135,27 +135,32 @@ while True:
             if official_account is not None:
                 first_group_date = LIST_PARSE.get_first_group_datetime(html)
 
-                reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
-
-                last_datetime = datetime.datetime(int(reg.group(1)), \
-                    int(reg.group(2)), int(reg.group(3)), int(reg.group(4)), \
-                    int(reg.group(5)), 0)
-
-                if last_datetime > official_account.last_article_time:
-                    log("First article time is great then last_article_time, download first group articles")
-                    official_account.last_article_time = last_datetime
-                    official_account.save()
-
-                    save_html(html, filename)
-                    msg_list = LIST_PARSE.get_first_group_urls(html)
-                    #LIST_PARSE.push_msg_list_cache(msg_list)
-                    for msg_url in msg_list:
-                        log("process article page")
-                        article_process(msg_url)
-                        pass
+                if first_group_date is None:
+                    log("First group datetime is None.")
+                    continue
                 else:
-                    log("Do not process article")
-                    pass
+                    reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
+
+                    last_datetime = datetime.datetime(int(reg.group(1)), \
+                        int(reg.group(2)), int(reg.group(3)), int(reg.group(4)), \
+                        int(reg.group(5)), 0)
+
+                    if last_datetime > official_account.last_article_time:
+                        log("First article time is great then last_article_time, download first group articles")
+                        official_account.last_article_time = last_datetime
+                        official_account.save()
+
+                        save_html(html, filename)
+                        msg_list = LIST_PARSE.get_first_group_urls(html)
+
+                        if msg_list is not None:
+                            for msg_url in msg_list:
+                                log("process article page")
+                                article_process(msg_url)
+                                pass
+                    else:
+                        log("Do not process article")
+                        pass
             else:
                 log("wechat_code is not found in mysql, " + wechat_code)
 
