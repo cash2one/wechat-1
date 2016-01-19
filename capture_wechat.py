@@ -155,6 +155,8 @@ while True:
                 else:
                     log("Do not process article")
                     pass
+            else:
+                log("wechat_code is not found in mysql, " + wechat_code)
 
     # article process
     elif 'article' == wechat_type:
