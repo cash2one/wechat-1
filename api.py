@@ -7,11 +7,13 @@ import tornado.options
 import tornado.ioloop
 import tornado.web
 import datetime
+import config
 
 from lib.task_cache import TaskCache
 from lib.log import Log
 from tornado.options import define, options
-import config
+from lib.models import OfficialAccount
+
 
 define("port", default = config.SERVER_PORT, help = "run port", type = int)
 define("mysql_host", default = config.MYSQL_HOST)
@@ -49,14 +51,15 @@ class Task(tornado.web.RequestHandler):
         if REDIS_CACHE.is_empty():
             response_body = '<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=%s#wechat_redirect"</script>'
             db = self.application.db
-            last_official_account = db.get("SELECT * FROM official_account ORDER BY last_update_time ASC LIMIT 1")
+            last_official_account = OfficialAccount.orderby(OfficialAccount.last_update_time).limit(1).getone()
 
             if last_official_account != None:
-                official_account = last_official_account.get('wechat_code')
-                official_account_id = last_official_account.get('id')
-                if official_account_id is not None:
-                    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    db.execute("UPDATE official_account SET last_update_time = \'%s\' WHERE id = %d" % (now, official_account_id))
+                official_account = last_official_account.wechat
+
+                now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                official_account.last_update_time = now
+                official_account.save()
+
                 self.write(response_body % official_account)
             else:
                 self.write('empty')

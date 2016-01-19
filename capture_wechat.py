@@ -68,6 +68,19 @@ def get_url_type(url):
 def list_process():
     pass
 
+def save_html(html, filename):
+    if not os.path.exists(os.path.dirname(filename)):
+        os.makedirs(os.path.dirname(filename))
+
+    try:
+        with open(filename, "w") as f:
+            f.write(html)
+            f.close()
+            return True
+    except Exception, e:
+        print e
+        return False
+
 def article_process(url):
     url_parse_object = urlparse.urlparse(url)
     path = url_parse_object.path
@@ -84,15 +97,9 @@ def article_process(url):
     html = get(url)
     filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
 
-    try:
-        if not os.path.exists(os.path.dirname(filename)):
-            os.makedirs(os.path.dirname(filename))
-        with open(filename, "w") as f:
-            f.write(html)
-            f.close()
-    except Exception, e:
-        print e
+    save_html(html, filename)
     pass
+
 
 
 while True:
@@ -122,30 +129,36 @@ while True:
 
         if html != None:
             filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
-            official_account = OfficialAccount.where(wechat_code = official_account_id[0]).getone()
+            wechat_code = official_account_id[0]
+            official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
+
             if official_account is not None:
                 log("update officila account last_article_time to now")
-                now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                official_account.last_article_time = now
-                official_account.save()
-                pass
+                first_group_date = LIST_PARSE.get_first_group_datetime(html)
 
-            if not os.path.exists(os.path.dirname(filename)):
-                os.makedirs(os.path.dirname(filename))
+                reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
 
-            try:
-                with open(filename, "w") as f:
-                    f.write(html)
-                    f.close()
+                last_datetime = datetime.datetime(int(reg.group(1)), \
+                    int(reg.group(2)), int(reg.group(3)), int(reg.group(4)), \
+                    int(reg.group(5)), 0)
+
+                if last_datetime > official_account.last_article_time:
+                    log("First article time is great then last_article_time, download first group articles")
+                    official_account.last_article_time = last_datetime
+                    official_account.save()
+
+                    save_html(html, filename)
                     msg_list = LIST_PARSE.get_first_group_urls(html)
                     #LIST_PARSE.push_msg_list_cache(msg_list)
                     for msg_url in msg_list:
                         log("process article page")
                         article_process(msg_url)
                         pass
-            except Exception, e:
-                print e
+                else:
+                    log("Do not process article")
+                    pass
 
+    # article process
     elif 'article' == wechat_type:
         log("download article page")
         html = get(url)

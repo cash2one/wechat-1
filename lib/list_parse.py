@@ -14,17 +14,20 @@ class ListParse(object):
             self.redis.push(url)
             pass
 
-    def get_first_group_urls(self, html):
+    def get_first_group_dom(self, html):
         html = PyQuery(html)
         msg_page = html('.msg_page')[0].getchildren()
 
-        # first group
+        # first group array
         msg_list = msg_page[0]
         children = msg_list.getchildren()
-        # msg header
-        msg_list_hd = children[0]
-        first_group_msg_date = msg_list_hd.getchildren()[0].text
-        # msg body
+        return children
+
+    def get_first_group_urls(self, html):
+        # first group
+        children = self.get_first_group_dom(html)
+
+        # msg list body
         msg_list_bd = children[1]
 
         # first group message list
@@ -53,11 +56,20 @@ class ListParse(object):
 
         return urls
 
+    def get_first_group_datetime(self, html):
+        # first group
+        children = self.get_first_group_dom(html)
+
+        # msg header
+        msg_list_hd = children[0]
+        first_group_msg_date = msg_list_hd.getchildren()[0].text
+        return first_group_msg_date
+
     def push_msg_list_cache(self, msg_list):
         for item in msg_list:
             self.push_to_redis(item)
 
-# f = open("/Users/john/MzA3ODU4NjgwMw==.html")
+# f = open("/Users/john/MzIzNTAxMzcxMw==.html")
 # list_parse = ListParse()
 # print list_parse.get_first_group_urls(f.read())
 
