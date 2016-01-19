@@ -124,7 +124,6 @@ while True:
     if 'list' == wechat_type:
         log("download list page")
         # get list html
-        log("Get list url:" + url)
         html = get(url)
 
         if html != None:
