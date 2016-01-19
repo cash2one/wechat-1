@@ -24,19 +24,23 @@ class ListParse(object):
         return children
 
     def get_first_group_urls(self, html):
-        # first group
-        children = self.get_first_group_dom(html)
+        try:
+            # first group
+            children = self.get_first_group_dom(html)
 
-        # msg list body
-        msg_list_bd = children[1]
+            # msg list body
+            msg_list_bd = children[1]
 
-        # first group message list
-        first_group_msg_list = msg_list_bd.getchildren()[0].getchildren()[1].getchildren()[0].getchildren()
+            # first group message list
+            first_group_msg_list = msg_list_bd.getchildren()[0].getchildren()[1].getchildren()[0].getchildren()
 
-        # get url array from first group message list
-        urls = self.iterate_msg_list(first_group_msg_list)
+            # get url array from first group message list
+            urls = self.iterate_msg_list(first_group_msg_list)
 
-        return urls
+            return urls
+        except Exception, e:
+            print e
+            return None
 
     def iterate_msg_list(self, msg_list_html):
         urls = []
@@ -57,13 +61,17 @@ class ListParse(object):
         return urls
 
     def get_first_group_datetime(self, html):
-        # first group
-        children = self.get_first_group_dom(html)
+        try:
+            # first group
+            children = self.get_first_group_dom(html)
 
-        # msg header
-        msg_list_hd = children[0]
-        first_group_msg_date = msg_list_hd.getchildren()[0].text
-        return first_group_msg_date
+            # msg header
+            msg_list_hd = children[0]
+            first_group_msg_date = msg_list_hd.getchildren()[0].text
+            return first_group_msg_date
+        except Exception, e:
+            print e
+            return None
 
     def push_msg_list_cache(self, msg_list):
         for item in msg_list:
