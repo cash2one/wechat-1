@@ -18,6 +18,8 @@ import urlparse
 import datetime
 import time
 import re
+import signal
+import sys
 
 import config
 from selenium import webdriver
@@ -25,6 +27,7 @@ from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
 from lib.list_parse import ListParse
 from lib.models import OfficialAccount
+from lib.log import Log
 
 DEBUG = True
 DISPLAY = Display(visible=0, size=(720, 1280))
@@ -38,6 +41,8 @@ REDIS_TO = TaskCache(db = 1)
 DOWNLOAD_PATH = '/home/john/wechat/download'
 
 LIST_PARSE = ListParse(REDIS_TO)
+
+LOGGER = Log("capture")
 
 def log(msg):
     if DEBUG:
@@ -54,7 +59,13 @@ def get(url):
         html = (DRIVER.page_source).encode("utf-8")
         return html
     except Exception, e:
-        print e
+        LOGGER.error(e)
+        DRIVER.close()
+        DISPLAY.stop()
+        LOGGER.info("Restart chrome")
+        DISPLAY.start()
+        DRIVER = webdriver.Chrome()
+        DRIVER.set_page_load_timeout(10)
         return None
 
 def get_url_type(url):
@@ -78,7 +89,7 @@ def save_html(html, filename):
             f.close()
             return True
     except Exception, e:
-        print e
+        LOGGER.error(e)
         return False
 
 def article_process(url):
@@ -100,7 +111,13 @@ def article_process(url):
     save_html(html, filename)
     pass
 
+def signal_handler(signal, frame):
+        print('You pressed Ctrl+C!')
+        DRIVER.close()
+        DISPLAY.stop()
+        sys.exit(0)
 
+signal.signal(signal.SIGINT, signal_handler)
 
 while True:
     url = REDIS_FROM.get_random()
