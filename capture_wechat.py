@@ -60,7 +60,9 @@ def get(url):
         return html
     except Exception, e:
         LOGGER.error(e)
+        global DRIVER
         DRIVER.close()
+        global DISPLAY
         DISPLAY.stop()
         LOGGER.info("Restart chrome")
         DISPLAY.start()
