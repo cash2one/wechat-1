@@ -120,6 +120,7 @@ def signal_handler(signal, frame):
         sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
 
 while True:
     url = REDIS_FROM.get_random()
@@ -205,6 +206,7 @@ while True:
     continue
 
 DRIVER.close()
+DISPLAY.stop()
 
 
 
