@@ -95,115 +95,117 @@ def save_html(html, filename):
         return False
 
 def article_process(url):
-    url_parse_object = urlparse.urlparse(url)
-    path = url_parse_object.path
-    params = urlparse.parse_qs(url_parse_object.query)
-    date_str = datetime.datetime.now().strftime('%Y%m%d')
+    try:
+        url_parse_object = urlparse.urlparse(url)
+        path = url_parse_object.path
+        params = urlparse.parse_qs(url_parse_object.query)
+        date_str = datetime.datetime.now().strftime('%Y%m%d')
 
-    official_account_id = params.get('__biz') or []
-    group_id = params.get('mid') or []
-    index = params.get('idx') or []
-    article_id = params.get('sn') or []
-    uin = params.get('uin') or []
-    file_name = official_account_id[0] + '_' + group_id[0] + '_' + index[0] + '_' + article_id[0]
+        official_account_id = params.get('__biz') or []
+        group_id = params.get('mid') or []
+        index = params.get('idx') or []
+        article_id = params.get('sn') or []
+        uin = params.get('uin') or []
+        file_name = official_account_id[0] + '_' + group_id[0] + '_' + index[0] + '_' + article_id[0]
 
-    html = get(url)
-    filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
+        html = get(url)
+        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
 
-    save_html(html, filename)
-    pass
+        save_html(html, filename)
+        pass
+    except Exception, e:
+        print e
+        pass
 
 def signal_handler(signal, frame):
-        print('You pressed Ctrl+C!')
-        DRIVER.close()
-        DISPLAY.stop()
-        sys.exit(0)
+    print('You pressed Ctrl+C!')
+    DRIVER.close()
+    DISPLAY.stop()
+    sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
 
-while True:
-    url = REDIS_FROM.get_random()
-    if url == None:
-        now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print now + " Not url task."
+def main():
+    while True:
+        url = REDIS_FROM.get_random()
+        if url == None:
+            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            print now + " Not url task."
+            time.sleep(1)
+            continue
+
+        url_parse_object = urlparse.urlparse(url)
+        path = url_parse_object.path
+        params = urlparse.parse_qs(url_parse_object.query)
+        wechat_type = ''
+        date_str = datetime.datetime.now().strftime('%Y%m%d')
+
+        official_account_id = params.get('__biz') or []
+        article_id = params.get('sn') or []
+        uin = params.get('uin') or []
+        # get type from url
+        wechat_type = get_url_type(path)
+
+        if 'list' == wechat_type:
+            log("download list page")
+            # get list html
+            html = get(url)
+
+            if html != None:
+                filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+                wechat_code = official_account_id[0]
+                official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
+
+                if official_account is not None:
+                    first_group_date = LIST_PARSE.get_first_group_datetime(html)
+
+                    if first_group_date is None:
+                        log("First group datetime is None.")
+                        continue
+                    else:
+                        reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
+
+                        last_datetime = datetime.datetime(int(reg.group(1)), \
+                            int(reg.group(2)), int(reg.group(3)), int(reg.group(4)), \
+                            int(reg.group(5)), 0)
+
+                        if last_datetime > official_account.last_article_time:
+                            log("First article time is great then last_article_time, download first group articles")
+                            official_account.last_article_time = last_datetime
+                            official_account.save()
+
+                            save_html(html, filename)
+
+                            # get article list from html
+                            msg_list = LIST_PARSE.get_first_group_urls(html)
+
+                            if msg_list is not None:
+                                for msg_url in msg_list:
+                                    log("process article page")
+                                    article_process(msg_url)
+                                    pass
+                        else:
+                            log("Do not process article")
+                            pass
+                else:
+                    log("wechat_code is not found in mysql, " + wechat_code)
+
+        # article process
+        elif 'article' == wechat_type:
+            log("download article page")
+            html = get(url)
+            filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + article_id[0] + ".html"
+
+            save_html(html, filename)
+
+        else:
+            log("Unkown wechat type")
+
         time.sleep(1)
         continue
 
-    url_parse_object = urlparse.urlparse(url)
-    path = url_parse_object.path
-    params = urlparse.parse_qs(url_parse_object.query)
-    wechat_type = ''
-    date_str = datetime.datetime.now().strftime('%Y%m%d')
-
-    official_account_id = params.get('__biz') or []
-    article_id = params.get('sn') or []
-    uin = params.get('uin') or []
-    # get type from url
-    wechat_type = get_url_type(path)
-
-    if 'list' == wechat_type:
-        log("download list page")
-        # get list html
-        html = get(url)
-
-        if html != None:
-            filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
-            wechat_code = official_account_id[0]
-            official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
-
-            if official_account is not None:
-                first_group_date = LIST_PARSE.get_first_group_datetime(html)
-
-                if first_group_date is None:
-                    log("First group datetime is None.")
-                    continue
-                else:
-                    reg = re.match(ur"([\d]+)年([\d]+)月([\d]+)日([\d]+):([\d]+)", first_group_date)
-
-                    last_datetime = datetime.datetime(int(reg.group(1)), \
-                        int(reg.group(2)), int(reg.group(3)), int(reg.group(4)), \
-                        int(reg.group(5)), 0)
-
-                    if last_datetime > official_account.last_article_time:
-                        log("First article time is great then last_article_time, download first group articles")
-                        official_account.last_article_time = last_datetime
-                        official_account.save()
-
-                        save_html(html, filename)
-                        msg_list = LIST_PARSE.get_first_group_urls(html)
-
-                        if msg_list is not None:
-                            for msg_url in msg_list:
-                                log("process article page")
-                                article_process(msg_url)
-                                pass
-                    else:
-                        log("Do not process article")
-                        pass
-            else:
-                log("wechat_code is not found in mysql, " + wechat_code)
-
-    # article process
-    elif 'article' == wechat_type:
-        log("download article page")
-        html = get(url)
-        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + article_id[0] + ".html"
-
-        try:
-            if not os.path.exists(os.path.dirname(filename)):
-                os.makedirs(os.path.dirname(filename))
-            with open(filename, "w") as f:
-                f.write(html)
-                f.close()
-        except Exception, e:
-            print e
-
-    else:
-        log("Unkown wechat type")
-
-    time.sleep(1)
-    continue
+main()
 
 DRIVER.close()
 DISPLAY.stop()
