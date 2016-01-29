@@ -44,7 +44,8 @@ LOGGER = Log("capture")
 
 def log(msg):
     if DEBUG:
-        print msg
+        # print msg
+        LOGGER.info(msg)
     pass
 
 def get(url):
