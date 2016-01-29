@@ -38,8 +38,6 @@ DRIVER.set_page_load_timeout(10)
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
 
-DOWNLOAD_PATH = '/home/john/wechat/download'
-
 LIST_PARSE = ListParse(REDIS_TO)
 
 LOGGER = Log("capture")
@@ -109,7 +107,7 @@ def article_process(url):
         file_name = official_account_id[0] + '_' + group_id[0] + '_' + index[0] + '_' + article_id[0]
 
         html = get(url)
-        filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
+        filename = config.DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + file_name + ".html"
 
         save_html(html, filename)
         pass
@@ -153,7 +151,7 @@ def main():
             html = get(url)
 
             if html != None:
-                filename = DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
+                filename = config.DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
                 wechat_code = official_account_id[0]
                 official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
 
@@ -195,7 +193,7 @@ def main():
         elif 'article' == wechat_type:
             log("download article page")
             html = get(url)
-            filename = DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + article_id[0] + ".html"
+            filename = config.DOWNLOAD_PATH + "/" + date_str + "/article/" + official_account_id[0] + "/" + article_id[0] + ".html"
 
             save_html(html, filename)
 
