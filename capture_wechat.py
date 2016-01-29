@@ -45,7 +45,7 @@ LOGGER = Log("capture")
 def log(msg):
     if DEBUG:
         # print msg
-        LOGGER.info(msg)
+        LOGGER.error(msg)
     pass
 
 def get(url):
@@ -63,7 +63,7 @@ def get(url):
         DRIVER.close()
         global DISPLAY
         DISPLAY.stop()
-        LOGGER.info("Restart chrome")
+        LOGGER.error("Restart chrome")
         DISPLAY.start()
         DRIVER = webdriver.Chrome()
         DRIVER.set_page_load_timeout(10)
