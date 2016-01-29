@@ -130,7 +130,7 @@ def main():
         url = REDIS_FROM.get_random()
         if url == None:
             now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            print now + " Not url task."
+            log(now + " Not url task.")
             time.sleep(1)
             continue
 
