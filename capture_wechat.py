@@ -54,8 +54,10 @@ def get(url):
         DRIVER.get(url)
         after = time.time() * 1000
         take_time = after - before
-        log("Browser takes time: %d millisecond." % take_time)
+
         html = (DRIVER.page_source).encode("utf-8")
+        html_size = len(html)
+        log("Browser takes time: %d millisecond. size: %s" % (take_time, str(html_size)))
         return html
     except Exception, e:
         LOGGER.error(e)
@@ -85,8 +87,6 @@ def save_html(html, filename):
         os.makedirs(os.path.dirname(filename))
 
     try:
-        html_size = len(html)
-        log("Download html size: " + str(html_size))
         with open(filename, "w") as f:
             f.write(html)
             f.close()
