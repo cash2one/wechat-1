@@ -30,8 +30,8 @@ from lib.models import OfficialAccount
 from lib.log import Log
 
 DEBUG = True
-DISPLAY = Display(visible=0, size=(720, 1280))
-DISPLAY.start()
+#DISPLAY = Display(visible=0, size=(720, 1280))
+#DISPLAY.start()
 DRIVER = webdriver.Chrome()
 DRIVER.set_page_load_timeout(10)
 
@@ -54,17 +54,17 @@ def get(url):
         DRIVER.get(url)
         after = time.time() * 1000
         take_time = after - before
-        log("Spider takes time: %d millisecond." % take_time)
+        log("Browser takes time: %d millisecond." % take_time)
         html = (DRIVER.page_source).encode("utf-8")
         return html
     except Exception, e:
         LOGGER.error(e)
         global DRIVER
         DRIVER.close()
-        global DISPLAY
-        DISPLAY.stop()
+        #global DISPLAY
+        #DISPLAY.stop()
         LOGGER.error("Restart chrome")
-        DISPLAY.start()
+        #DISPLAY.start()
         DRIVER = webdriver.Chrome()
         DRIVER.set_page_load_timeout(10)
         return None
@@ -85,6 +85,8 @@ def save_html(html, filename):
         os.makedirs(os.path.dirname(filename))
 
     try:
+        html_size = len(html)
+        log("Download html size: " + str(html_size))
         with open(filename, "w") as f:
             f.write(html)
             f.close()
@@ -119,7 +121,7 @@ def article_process(url):
 def signal_handler(signal, frame):
     print('You pressed Ctrl+C!')
     DRIVER.close()
-    DISPLAY.stop()
+    #DISPLAY.stop()
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
@@ -129,8 +131,7 @@ def main():
     while True:
         url = REDIS_FROM.get_random()
         if url == None:
-            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            log(now + " Not url task.")
+            log("Not url task.")
             time.sleep(1)
             continue
 
@@ -170,7 +171,7 @@ def main():
                             int(reg.group(5)), 0)
 
                         if last_datetime > official_account.last_article_time:
-                            log("First article time is great then last_article_time, download first group articles")
+                            log("First article time is great then last_article_time, download first group articles, wechat code:" + wechat_code)
                             official_account.last_article_time = last_datetime
                             official_account.save()
 
@@ -185,7 +186,7 @@ def main():
                                     article_process(msg_url)
                                     pass
                         else:
-                            log("Do not process article")
+                            log("First article time is equal to last_article_time, continue.")
                             pass
                 else:
                     log("wechat_code is not found in mysql, " + wechat_code)
@@ -207,7 +208,7 @@ def main():
 main()
 
 DRIVER.close()
-DISPLAY.stop()
+#DISPLAY.stop()
 
 
 
