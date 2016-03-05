@@ -10,7 +10,7 @@ ROOT_PATH = os.getcwd()
 
 LOG_FILE = ROOT_PATH + '/log/development.log'
 
-DOWNLOAD_PATH = ROOT_PATH + '/download'
+DOWNLOAD_PATH = '/mnt/sdc1/wechat/download'
 
 SERVER_PORT = 8888
 
@@ -29,3 +29,5 @@ Database.set_dbapi(MySQLdb)
 Database.config(user = MYSQL_USER, passwd = MYSQL_PASSWORD, \
     db = MYSQL_DATABASE, charset='utf8', use_unicode = True)
 
+# from lib.models import OfficialAccount
+# print OfficialAccount.orderby(OfficialAccount.last_update_time).limit(1).getone().name
