@@ -155,7 +155,7 @@ def main():
             if html != None:
                 filename = config.DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
                 wechat_code = official_account_id[0]
-                official_account = OfficialAccount.where(wechat_code = wechat_code).getone()
+                official_account = OfficialAccount.get(OfficialAccount.wechat_code = wechat_code)
 
                 if official_account is not None:
                     first_group_date = LIST_PARSE.get_first_group_datetime(html)

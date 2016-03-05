@@ -2,9 +2,7 @@
 import os
 import logging
 import logging.handlers
-import MySQLdb
-
-from skylark import Database
+from peewee import MySQLDatabase
 
 ROOT_PATH = os.getcwd()
 
@@ -14,20 +12,24 @@ DOWNLOAD_PATH = '/mnt/sdc1/wechat/download'
 
 SERVER_PORT = 8888
 
-MYSQL_HOST = "127.0.0.1:3306"
+MYSQL_HOST = "127.0.0.1"
 MYSQL_USER = "root"
 MYSQL_PASSWORD = "123456"
 MYSQL_DATABASE = "wechat"
 
-LOG_FILE = 'log/development.log'
 handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes = 1024*1024, backupCount = 5)
 fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
 formatter = logging.Formatter(fmt)
 handler.setFormatter(formatter)
 
-Database.set_dbapi(MySQLdb)
-Database.config(user = MYSQL_USER, passwd = MYSQL_PASSWORD, \
-    db = MYSQL_DATABASE, charset='utf8', use_unicode = True)
+MYSQL_DB = MySQLDatabase(MYSQL_DATABASE, host = MYSQL_HOST, user = MYSQL_USER, \
+    passwd = MYSQL_PASSWORD, charset = 'utf8')
 
-# from lib.models import OfficialAccount
-# print OfficialAccount.orderby(OfficialAccount.last_update_time).limit(1).getone().name
+
+
+
+
+
+
+
+

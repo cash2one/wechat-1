@@ -1,21 +1,45 @@
 # -*- coding: utf-8 -*-
-from skylark import Model, Field, PrimaryKey
+import sys
+from peewee import *
+sys.path.append("..")
+import config
 
-class OfficialAccount(Model):
+class BaseModel(Model):
+    """A base model that will use our MySQL database"""
+    class Meta:
+        database = config.MYSQL_DB
+
+class OfficialAccount(BaseModel):
     """
     model for OfficialAccount
     """
 
-    id = PrimaryKey()
-    wechat_id = Field()
-    wechat_code = Field()
-    name = Field()
-    desc = Field()
-    classify = Field()
-    last_list_update = Field()
-    wechat_status = Field()
-    worker = Field()
-    last_update_time = Field()
-    last_article_time = Field()
-    create_time = Field()
-    update_time = Field()
+    id = PrimaryKeyField()
+    wechat_id = CharField()
+    wechat_code = CharField()
+    name = CharField()
+    desc = CharField()
+    classify = IntegerField()
+    last_list_update = BigIntegerField()
+    wechat_status = IntegerField()
+    worker = CharField()
+    last_update_time = DateTimeField()
+    last_article_time = DateTimeField()
+    create_time = DateTimeField()
+    update_time = DateTimeField()
+
+    class Meta:
+        db_table = 'official_account'
+
+
+
+
+
+
+
+
+
+
+
+
+

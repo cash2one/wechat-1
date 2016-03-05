@@ -49,7 +49,7 @@ class Task(tornado.web.RequestHandler):
     def get(self):
         if REDIS_CACHE.is_empty():
             response_body = '<script type="text/javascript">location.href="http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=%s#wechat_redirect"</script>'
-            last_official_account = OfficialAccount.orderby(OfficialAccount.last_update_time).limit(1).getone()
+            last_official_account = OfficialAccount.select().order_by(OfficialAccount.last_update_time).get()
 
             if last_official_account != None:
                 official_account = last_official_account.wechat_code
@@ -57,6 +57,7 @@ class Task(tornado.web.RequestHandler):
 
                 last_official_account.last_update_time = datetime.datetime.now()
                 last_official_account.save()
+                print last_official_account.id
 
                 self.write(response_body % official_account)
             else:
