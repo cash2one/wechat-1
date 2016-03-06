@@ -67,7 +67,7 @@ def get(url):
         #DISPLAY.stop()
         LOGGER.error("Restart browser")
         #DISPLAY.start()
-        DRIVER = webdriver.Chrome()
+        DRIVER = webdriver.Firefox()
         DRIVER.set_page_load_timeout(45)
         return None
 
