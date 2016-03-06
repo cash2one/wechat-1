@@ -23,7 +23,6 @@ import sys
 
 import config
 from selenium import webdriver
-from pyvirtualdisplay import Display
 from lib.task_cache import TaskCache
 from lib.list_parse import ListParse
 from lib.models import OfficialAccount
@@ -32,7 +31,7 @@ from lib.log import Log
 DEBUG = True
 #DISPLAY = Display(visible=0, size=(720, 1280))
 #DISPLAY.start()
-DRIVER = webdriver.Chrome()
+DRIVER = webdriver.Firefox()
 DRIVER.set_page_load_timeout(10)
 
 REDIS_FROM = TaskCache(db = 0)
@@ -115,7 +114,7 @@ def article_process(url):
         save_html(html, filename)
         pass
     except Exception, e:
-        print e
+        LOGGER.error(e)
         pass
 
 def signal_handler(signal, frame):
@@ -155,7 +154,7 @@ def main():
             if html != None:
                 filename = config.DOWNLOAD_PATH + "/" + date_str + "/list/" + official_account_id[0] + ".html"
                 wechat_code = official_account_id[0]
-                official_account = OfficialAccount.get(OfficialAccount.wechat_code = wechat_code)
+                official_account = OfficialAccount.get(OfficialAccount.wechat_code == wechat_code)
 
                 if official_account is not None:
                     first_group_date = LIST_PARSE.get_first_group_datetime(html)
