@@ -31,8 +31,9 @@ from lib.log import Log
 DEBUG = True
 #DISPLAY = Display(visible=0, size=(720, 1280))
 #DISPLAY.start()
+# Xvfb :99 -ac -screen 0 720x1280x24
 DRIVER = webdriver.Firefox()
-DRIVER.set_page_load_timeout(10)
+DRIVER.set_page_load_timeout(45)
 
 REDIS_FROM = TaskCache(db = 0)
 REDIS_TO = TaskCache(db = 1)
@@ -64,10 +65,10 @@ def get(url):
         DRIVER.close()
         #global DISPLAY
         #DISPLAY.stop()
-        LOGGER.error("Restart chrome")
+        LOGGER.error("Restart browser")
         #DISPLAY.start()
         DRIVER = webdriver.Chrome()
-        DRIVER.set_page_load_timeout(10)
+        DRIVER.set_page_load_timeout(45)
         return None
 
 def get_url_type(url):
